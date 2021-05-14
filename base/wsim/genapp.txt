@@ -1,0 +1,62 @@
+*
+* (C) Copyright IBM Corp. 2011, 2020
+*
+GENAPP   NTWRK BUFSIZE=1920,
+               Conrate=No,
+               DELAY=F1,
+               HEAD='For test',
+               INIT=SEC,
+               ITIME=6,
+               LOGDSPLY=BOTH,
+               LUTYPE=LU2,
+               MLOG=YES,
+               MLEN=1000,
+               OPTIONS=(DEBUG),
+               REPORT=RATE,
+               THKTIME=IMMED,
+               UTI=100
+*
+007      IF    LOC=RU+0,TEXT=('32'),THEN=C#ONCICS
+*
+Stop     PATH  Stop
+ADDTRANS Path  SSC1A1,
+               SSP1A1,
+               SSP2A1,
+               SSP3A1,
+               SSP4A1
+ALLTRANS Path  SSC1A1,
+               SSC1I1,
+               SSP1A1,
+               SSP1D1,
+               SSP1I1,
+               SSP1U1,
+               SSP2A1,
+               SSP2D1,
+               SSP2I1,
+               SSP2U1,
+               SSP3A1,
+               SSP3D1,
+               SSP3I1,
+               SSP3U1,
+               SSP4A1,
+               SSP4D1,
+               SSP4I1
+WEB1     Path  WSC1I1,
+               WSC1A1
+ADDTRANS Dist  5,
+               1,
+               1,
+               1,
+               1
+*
+SECONDS  UTI   100
+*
+GNWS001  VTAMAPPL
+LUSS001  LU       FRSTTXT=#ONCICS,Path=(ADDTRANS)
+*
+*STCP001   TCPIP   TCPNAME=TCPIP,
+*                  STCPPORT=4321,
+*                  SERVADDR=127.0.0.1,
+*                  BUFSIZE=32767,
+*                  MLEN=32767
+*LUWS001   DEV     TYPE=STCP,PATH=(WEB1)

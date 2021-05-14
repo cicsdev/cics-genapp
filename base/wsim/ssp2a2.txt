@@ -1,0 +1,25 @@
+/******************************************************************/
+/*                                                                */
+/* (C) Copyright IBM Corp. 2011, 2020                             */
+/*                                                                */
+/******************************************************************/
+I1   = Random(101,5456900)
+VS1  = Right(Char(I1),10,'0')
+I1   = Random(1997,2004)
+I2   = Random(1,12)
+I3   = Random(1,28)
+VS2  = Char(I1)                          || '-' ||,
+       Right(Char(I2),2,'0')             || '-' ||,
+       Right(Char(I3),2,'0')
+I1   = I1 + 1
+VS3  = Char(I1)                          || '-' ||,
+       Right(Char(I2),2,'0')             || '-' ||,
+       Right(Char(I3),2,'0')
+VS5  = Char(Random(10,35))
+VS6  = Char(Random(10000,999000))
+VS7  = UTBL(Fname,"R") UTBL(Sname,"R")
+VS4  = Right(VS7,4) Left(VS7,5)
+VS8  = 'N' ; VS9 = 'N' ; VS10 = 'N'
+If Random(1,2) = 1 Then VS8  = 'Y'
+If Random(1,2) = 1 Then VS9  = 'Y'
+If Random(1,2) = 1 Then VS10 = 'Y'

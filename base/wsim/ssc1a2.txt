@@ -1,0 +1,18 @@
+/******************************************************************/
+/*                                                                */
+/* (C) Copyright IBM Corp. 2011, 2020                             */
+/*                                                                */
+/******************************************************************/
+VS1 = Left(UTBL(Fname,"R"),10)
+VS2 = Left(UTBL(Sname,"R"),20)
+I1 = Random(1940,1980)
+I2 = Random(1,12)
+I3 = Random(1,28)
+VS3 = Char(I1)                          || '-' ||,
+      Right(Char(I2),2,'0')             || '-' ||,
+      Right(Char(I3),2,'0')
+VS4 = UTBL(Sname,"R")||UTBL(Fname,"R")
+VS4 = Left(VS4,19)
+VS5 = Char(Random(1,9999))
+VS6 = Left(VS1,1)||Left(VS2,1)||Left(VS5,3)||Left(VS4,2)
+VS6 = Left(UTBL(Pcode,"R"),7)

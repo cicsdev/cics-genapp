@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns2:eventBinding CICSEPSchemaRelease="0" CICSEPSchemaVersion="1" xsi:schemaLocation="http://www.ibm.com/xmlns/prod/cics/eventprocessing/eventbinding CicsEventBinding.xsd " xmlns:ns2="http://www.ibm.com/xmlns/prod/cics/eventprocessing/eventbinding" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <description></description>
+    <userTag></userTag>
+    <eventSpecification>
+        <name>Count_business_trans</name>
+        <description></description>
+        <eventInformation>
+            <eventInformationItem description="" length="6" dataPrecision="0" dataType="text" name="Request_Type"/>
+            <eventInformationItem description="" length="2" dataPrecision="0" dataType="numeric" name="Return_code"/>
+        </eventInformation>
+    </eventSpecification>
+    <eventCaptureSpecification>
+        <name>genapp_program</name>
+        <eventIdentifier>Count_business_trans</eventIdentifier>
+        <description></description>
+        <filter>
+            <contextFilter>
+                <transactionId filterValue="" filterOperator="OFF"/>
+                <currentProgram filterValue="LG" filterOperator="SW"/>
+                <userId filterValue="" filterOperator="OFF"/>
+                <CommandResp filterValue="OK" filterOperator="OFF"/>
+                <EIBAID value="" filterOperator="OFF"/>
+                <EIBCPOSN filterValue="1" filterOperator="OFF"/>
+            </contextFilter>
+            <locationFilter filterType="CICS_API">
+                <linkCommand isPre="false" adVerb="PROGRAM" verb="LINK">
+                    <PROGRAM filterValue="" filterOperator="OFF" keyword="PROGRAM"/>
+                    <CHANNEL filterValue="" filterOperator="OFF" keyword="CHANNEL"/>
+                </linkCommand>
+            </locationFilter>
+            <dataFilter/>
+        </filter>
+        <dataCapture>
+            <captureItem>
+                <dataCaptureItem formatPrecision="0" formatdataType="text" formatlength="6" eventItemName="Request_Type" languageVariableName="" captureDataPrecision="0" captureDataType="CHAR" captureLength="6" offset="0" container="" source="COMMAREA"/>
+            </captureItem>
+            <captureItem>
+                <dataCaptureItem formatPrecision="0" formatdataType="numeric" formatlength="2" eventItemName="Return_code" languageVariableName="" captureDataPrecision="0" captureDataType="CHAR" captureLength="2" offset="6" container="" source="COMMAREA"/>
+            </captureItem>
+        </dataCapture>
+    </eventCaptureSpecification>
+    <eventDispatcherSpecification>
+        <eventDispatcher>
+            <eventDispatcherPolicy>
+                <dispatchPriority>normal</dispatchPriority>
+                <eventsTransactional>false</eventsTransactional>
+                <adapterUserid useContextUserid="false"></adapterUserid>
+                <adapterTranId></adapterTranId>
+            </eventDispatcherPolicy>
+            <eventDispatcherAdapter>
+                <cicsTransactionAdapter>
+                    <transactionId>LGST</transactionId>
+                    <sysid></sysid>
+                    <userid useContextUserid="false"></userid>
+                    <format>CCE</format>
+                </cicsTransactionAdapter>
+            </eventDispatcherAdapter>
+        </eventDispatcher>
+    </eventDispatcherSpecification>
+</ns2:eventBinding>

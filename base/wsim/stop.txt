@@ -1,0 +1,13 @@
+/******************************************************************/
+/*                                                                */
+/* (C) Copyright IBM Corp. 2011, 2020                             */
+/*                                                                */
+/******************************************************************/
+@Include  #SSVARS
+
+STOP:  Msgtxt
+
+Say 'Entered Stop...Quiescing terminal'
+Quiesce
+
+       Endtxt

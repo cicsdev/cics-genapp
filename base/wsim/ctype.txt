@@ -1,0 +1,16 @@
+*
+* (C) Copyright IBM Corp. 2011, 2020
+*
+CTYPE  MSGUTBL      (THEFT),
+      (FIRE),
+      (ACCIDENT),
+      (WATER DAMAGE),
+      (SUBSIDENCE),
+      (INJURY),
+      (WIND DAMAGE),
+      (VANDALISM),
+      (WEATHER DAMAGE),
+      (CRASH),
+      (ICE DAMAGE),
+      (DEATH),
+      (SERIOUS ILLNESS)

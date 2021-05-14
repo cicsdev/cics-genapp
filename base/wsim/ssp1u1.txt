@@ -1,0 +1,118 @@
+/******************************************************************/
+/*                                                                */
+/* (C) Copyright IBM Corp. 2011, 2020                             */
+/*                                                                */
+/******************************************************************/
+@Include  #SSVARS
+
+SSP1U1: msgtxt
+/*-------------------------------------------------------------------*/
+/* CST Application - Motor Policy Update                             */
+/*-------------------------------------------------------------------*/
+
+Type 'LGCF'
+Delay(0)
+Transmit And Wait Until Onin
+I1 = Index(Screen,'CUSTOMER=')
+S1 = Substr(Screen,I1+9,10)
+Delay(0)
+Transmit Using Clear And Wait Until Onin
+
+Type 'LGPF M'||S1
+Delay(0)
+Transmit And Wait Until Onin
+I1 = Index(Screen,'Key=')
+S9 = Substr(Screen,I1+4,1)
+S2 = Substr(Screen,I1+5,10)
+S1 = Substr(Screen,I1+15,10)
+
+If I1 = 0  | S9 <> 'M' Then
+  Do
+    Nop
+  End
+Else
+  Do
+    Delay(0)
+    Transmit Using Clear And Wait Until Onin
+
+    Type 'SSP1'
+    Delay(0)
+    Transmit and wait until Onin
+
+    COUNT_LU2_SSP1U1 = COUNT_LU2_SSP1U1 + 1
+
+    If STRT_Debugit = 'ON' Then
+      Say 'Motor Policy Update P='||S1||' C='||S2
+
+    Home
+
+    Type S1
+    Type S2
+
+    Cursor(22,25)
+    Type '4'
+    Delay(0)
+    Transmit And Wait Until Onin
+    If Index(Screen,"No data") = 0 Then
+      Do
+        Home
+
+        I1 = Random(101,5456900)
+        S1  = Right(Char(I1),10,'0')
+        I1  = Random(1997,2004)
+        I2  = Random(1,12)
+        I3  = Random(1,28)
+        S2  = Char(I1)                          || '-' ||,
+              Right(Char(I2),2,'0')             || '-' ||,
+              Right(Char(I3),2,'0')
+        I1  = I1 + 1
+        S3  = Char(I1)                          || '-' ||,
+              Right(Char(I2),2,'0')             || '-' ||,
+              Right(Char(I3),2,'0')
+        S4  = UTBL(Cmake,"R")
+        S5  = UTBL(Cmodel,"R")
+        S6  = Char(Random(13000,38000))
+        S7  = Right(S1,1)||Right(S5,3)||Right(S4,2)||Left(S5,1)
+        S8  = UTBL(Ccolor,"R")
+        S9  = Char(Random(1300,3500))
+        I1  = Random(1975,2004)
+        I2  = Random(1,12)
+        I3  = Random(1,28)
+        S10 = Char(I1)                          || '-' ||,
+              Right(Char(I2),2,'0')             || '-' ||,
+              Right(Char(I3),2,'0')
+
+        Cursor(8,51)
+        ErEof
+        Type S4
+        Cursor(9,51)
+        ErEof
+        Type S5
+        Cursor(10,51)
+        ErEof
+        Type S6
+        Cursor(11,51)
+        ErEof
+        Type S7
+        Cursor(12,51)
+        ErEof
+        Type S8
+        Cursor(13,51)
+        ErEof
+        Type S9
+
+        Delay(0)
+        Transmit And Wait Until Onin
+        If Index(Screen,"Motor Policy Updated") = 0 Then
+          Do
+            Say 'Motor Policy Update Failed'
+            eCount_lu2_SSP1U1 = eCount_lu2_SSP1U1 + 1
+          End
+      End
+
+    Delay(0)
+    Transmit Using PF3 And Wait Until Onin
+  End
+Transmit Using Clear And Wait Until Onin
+
+endtxt

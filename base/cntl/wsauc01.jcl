@@ -1,0 +1,32 @@
+//GENASOAP  JOB  ,S8SMITH,CLASS=A,NOTIFY=&SYSUID,
+//         MSGCLASS=A,REGION=900M
+//*
+//* (C) Copyright IBM Corp. 2011, 2020
+//*
+//********************************************************
+//* LANGUAGE STRUCTURE TO WSDL CONVERSION ROUTINE
+//* Update CUSTOMER DETAILS
+//********************************************************
+//*
+//JOBPROC JCLLIB ORDER=<CICSHLQ>.SDFHINST
+//*
+//LS2WS     EXEC DFHLS2WS,
+//    JAVADIR='java601_bit64_ga/J6.0.1_64',
+//    USSDIR='cics660',
+//    PATHPREF='',
+//    TMPDIR='/tmp',
+//    TMPFILE='LS2WS'
+//INPUT.SYSUT1 DD *
+ PDSLIB=<SOURCEX>
+ LANG=COBOL
+ PGMNAME=LGUCUS01
+ REQMEM=SOAIC01
+ RESPMEM=SOAIC01
+ LOGFILE=<ZFSHOME>/genapp/logs/LS2WS_LGUCUS01.LOG
+ URI=GENAPP/LGUCUS01
+ PGMINT=COMMAREA
+ WSBIND=<ZFSHOME>/genapp/wsdir/LGUCUS01.wsbind
+ WSDL=<ZFSHOME>/genapp/wsdir/LGUCUS01.wsdl
+ HTTPPROXY=PROXY.HURSLEY.IBM.COM:80
+/*
+//

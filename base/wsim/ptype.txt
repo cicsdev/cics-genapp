@@ -1,0 +1,20 @@
+*
+* (C) Copyright IBM Corp. 2011, 2020
+*
+PTYPE  MSGUTBL      (OFFICE),
+      (SHOP),
+      (RETAIL),
+      (WAREHOUSE),
+      (WHOLESALE),
+      (CHEMIST),
+      (PARK),
+      (B & B),
+      (HOTEL),
+      (PRISON),
+      (GARAGE),
+      (STATION),
+      (SUPERMARKET),
+      (SHOPPING MALL),
+      (STADIUM),
+      (SCHOOL),
+      (HOSPITAL)

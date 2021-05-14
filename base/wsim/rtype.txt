@@ -1,0 +1,11 @@
+*
+* (C) Copyright IBM Corp. 2011, 2020
+*
+RTYPE  MSGUTBL      (ROAD),
+      (RD),
+      (STREET),
+      (ST),
+      (AVENUE),
+      (AVE),
+      (CLOSE),
+      (CL)

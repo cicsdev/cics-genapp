@@ -1,0 +1,79 @@
+/******************************************************************/
+/*                                                                */
+/* (C) Copyright IBM Corp. 2011, 2020                             */
+/*                                                                */
+/******************************************************************/
+/*-------------------------------------------------------------------*/
+/* CST SOAP Application - Fetch Valid Customer Number                */
+/*-------------------------------------------------------------------*/
+
+Onin Index(S5,'Policy Bad=X') > 0 then abort
+On Signaled('StopNow') then abort
+
+/* Soap envelope */
+S2 = '<?xml version="1.0" encoding="UTF-8" ?>'                      ||,
+     '<soapenv:Envelope'                                            ||,
+     ' xmlns:q0="http://www.LGICVS01.SOAVC01I.Request.com"'         ||,
+     ' xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"'   ||,
+     ' xmlns:xsd="http://www.w3.org/2001/XMLSchema"'                ||,
+     ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">'      ||,
+     '<soapenv:Body>'                                               ||,
+     '<q0:LGICVS01Operation>'                                       ||,
+     '<q0:comma_data>'                                              ||,
+     '<q0:Customer_Number />'                                       ||,
+     '<q0:Filler1 />'                                               ||,
+     '</q0:comma_data>'                                             ||,
+     '</q0:LGICVS01Operation>'                                      ||,
+     '</soapenv:Body>'                                              ||,
+     '</soapenv:Envelope>'
+
+/* HTTP header */
+S1 =  'POST /GENAPP/LGICVS01 HTTP/1.1' ||,
+     '0D25'x                                           ||,
+      'Host: sysplexa.hursley.ibm.com:9668'            ||,
+     '0D25'x                                           ||,
+      'Content-Type: text/xml; charset=utf-8'          ||,
+     '0D25'x                                           ||,
+      'Content-Length: ' || Char(Length(S2))           ||,
+     '0D25'x                                           ||,
+      'Accept: application/soap'                       ||,
+      '+xml, application/dime, multipar'               ||,
+      't/related, text/*'                              ||,
+     '0D25'x                                           ||,
+      'User-Agent: IBM Web Services Explorer'          ||,
+     '0D25'x                                           ||,
+      'Cache-Control: no-cache'                        ||,
+     '0D25'x                                           ||,
+      'Pragma: no-cache'                               ||,
+     '0D25'x                                           ||,
+     'SOAPAction: ""'                                  ||,
+     '0D25'x                                           ||,
+      'Connection: close'                              ||,
+     '0D25'x                                           ||,
+     '0D25'x
+
+/* Send the web request */
+S5 = ''
+CUST_NUM = 0
+
+Found = Off
+Type Translate(S1,E2A)||Translate(S2,E2A)
+Transmit
+Do While Found = Off
+  Wait Until Onin
+End
+
+/* Validate that the response message looks ok */
+If Index(S5,'<Comma_Data_High>') = 0 Then Do
+  Say 'Failure looking up customer number'
+  Say S5
+  Signal('StopNow')
+End
+
+/* Get the cust num from the response soap msg */
+I1 = Pos('<Comma_Data_High>',S5)
+I2 = Pos('</Comma_Data_High>',S5)
+I3 = I1 + 17
+S1 = Substr(S5,I3,I2-I3)
+CUST_NUM = E2D(S1)
+

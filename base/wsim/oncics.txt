@@ -1,0 +1,22 @@
+/******************************************************************/
+/*                                                                */
+/* (C) Copyright IBM Corp. 2011, 2020                             */
+/*                                                                */
+/******************************************************************/
+@Include  #SSVARS
+
+#ONCICS:  Msgtxt
+
+onin0001: onin Index(Screen,'DFHCE3547') > 0 Then Found = On
+
+found = off
+
+Do while found = off
+ Initself('<TORAPPL>')
+ Suspend(5,'Seconds')
+End
+Deact onin0001
+
+Transmit Using Clear and wait until Onin
+
+          endtxt

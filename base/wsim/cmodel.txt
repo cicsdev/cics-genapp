@@ -1,0 +1,26 @@
+*
+* (C) Copyright IBM Corp. 2011, 2020
+*
+Cmodel  MSGUTBL      (205),
+      (TWINKLE),
+      (911),
+      (RIVA),
+      (OMEGA),
+      (FIESTA),
+      (DISCOVERY),
+      (CAPRI),
+      (CORTINA),
+      (UNO),
+      (ASTRA),
+      (CRV),
+      (GOLF),
+      (POLO),
+      (Z5),
+      (FIREBIRD),
+      (THUNDERBIRD),
+      (CAVALIER),
+      (6),
+      (CORSA),
+      (BOXSTER),
+      (SMALLBIT),
+      (BACKSEATER)

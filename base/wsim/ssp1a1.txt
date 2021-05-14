@@ -1,0 +1,99 @@
+/******************************************************************/
+/*                                                                */
+/* (C) Copyright IBM Corp. 2011, 2020                             */
+/*                                                                */
+/******************************************************************/
+@Include  #SSVARS
+
+SSP1A1: msgtxt
+/*-------------------------------------------------------------------*/
+/* CST Application - Motor POLICY ADD                                */
+/*-------------------------------------------------------------------*/
+
+Type 'LGCF'
+Delay(0)
+Transmit And Wait Until Onin
+I1 = Index(Screen,'CUSTOMER=')
+S1 = Substr(Screen,I1+9,10)
+
+Delay(0)
+Transmit Using Clear And Wait Until Onin
+Type 'SSP1'
+Delay(0)
+Transmit and wait until Onin
+
+Count_lu2_SSP1A1 = Count_lu2_SSP1A1 + 1
+/*********************************************************************/
+If STRT_Debugit = 'TEST' &,
+   Count_lu2_SSP1A1 > STRT_Stats_Out Then Do
+     eMail_Message = 'Policy add has completed.'
+     Signal 'EMAIL'
+     Call Stop
+   End
+/*********************************************************************/
+
+If STRT_Debugit = 'ON' Then
+  Say 'Motor Policy Add C='|| S1
+
+Home
+
+I1  = Random(1997,2004)
+I2  = Random(1,12)
+I3  = Random(1,28)
+S2  = Char(I1)                          || '-' ||,
+      Right(Char(I2),2,'0')             || '-' ||,
+      Right(Char(I3),2,'0')
+I1  = I1 + 1
+S3  = Char(I1)                          || '-' ||,
+      Right(Char(I2),2,'0')             || '-' ||,
+      Right(Char(I3),2,'0')
+S4  = UTBL(Cmake,"R")
+S5  = UTBL(Cmodel,"R")
+S6  = Char(Random(13000,38000))
+S7  = Right(S1,1)||Right(S5,3)||Right(S4,2)||Left(S5,1)
+S8  = UTBL(Ccolor,"R")
+S9  = Char(Random(1300,3500))
+I1  = Random(1975,2007)
+I2  = Random(1,12)
+I3  = Random(1,28)
+S10 = Char(I1)                          || '-' ||,
+      Right(Char(I2),2,'0')             || '-' ||,
+      Right(Char(I3),2,'0')
+
+Cursor(5,51)
+Type S1
+Cursor(6,51)
+Type S2
+Cursor(7,51)
+Type S3
+Cursor(8,51)
+Type S4
+Cursor(9,51)
+Type S5
+Cursor(10,51)
+Type S6
+Cursor(11,51)
+Type S7
+Cursor(12,51)
+Type S8
+Cursor(13,51)
+Type S9
+Cursor(14,51)
+Type S10
+
+Cursor(22,25)
+Type '2'
+Delay(0)
+Transmit And Wait Until Onin
+If Index(Screen,"New Motor Policy Inserted") = 0 Then
+  Do
+    eCount_lu2_SSP1A1 = eCount_lu2_SSP1A1 + 1
+    Say 'Motor Policy Add Failed'
+  End
+
+Delay(0)
+Transmit Using PF3 And Wait Until Onin
+Transmit Using Clear And Wait Until Onin
+
+endtxt
+

@@ -1,0 +1,73 @@
+/******************************************************************/
+/*                                                                */
+/* (C) Copyright IBM Corp. 2011, 2020                             */
+/*                                                                */
+/******************************************************************/
+@Include  #SSVARS
+
+SSC1A1: msgtxt
+/*-------------------------------------------------------------------*/
+/* CST Application - Customer Add                                    */
+/*-------------------------------------------------------------------*/
+
+Type 'SSC1'
+Delay(0)
+Transmit and wait until Onin
+
+Count_lu2_SSC1A1 = Count_lu2_SSC1A1 + 1
+/*********************************************************************/
+If STRT_Debugit = 'TEST' &,
+   Count_lu2_SSC1A1 > STRT_Stats_Out Then Do
+     eMail_Message = 'Customer Add has completed.'
+     Signal 'EMAIL'
+     Call Stop
+   End
+/*********************************************************************/
+
+If STRT_Debugit = 'ON' Then
+  Say 'Customer Add'
+
+Home
+
+S1 = UTBL(Fname,"R")
+S2 = UTBL(Sname,"R")
+I1 = Random(1940,1980)
+I2 = Random(1,12)
+I3 = Random(1,28)
+S3 = Char(I1)                          || '-' ||,
+     Right(Char(I2),2,'0')             || '-' ||,
+     Right(Char(I3),2,'0')
+S4 = UTBL(Sname,"R")||UTBL(Fname,"R")
+S4 = Left(S4,19)
+S5 = Char(Random(1,9999))
+S6 = Left(S1,1)||Left(S2,1)||Left(S5,3)||Left(S4,2)
+S6 = UTBL(Pcode,"R")
+
+Cursor(5,51)
+Type S1
+Cursor(6,51)
+Type S2
+Cursor(7,51)
+Type S3
+Cursor(8,51)
+Type S4
+Cursor(9,51)
+Type S5
+Cursor(10,51)
+Type S6
+
+Cursor(22,25)
+Type '2'
+Delay(0)
+Transmit And Wait Until Onin
+If Index(Screen,"New Customer Inserted") = 0 Then
+  Do
+    eCount_lu2_SSC1A1 = eCount_lu2_SSC1A1 + 1
+    Say 'Customer add failed'
+  End
+
+Delay(0)
+Transmit Using PF3 And Wait Until Onin
+Transmit Using Clear And Wait Until Onin
+
+endtxt

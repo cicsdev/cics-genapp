@@ -1,0 +1,80 @@
+/******************************************************************/
+/*                                                                */
+/* (C) Copyright IBM Corp. 2011, 2020                             */
+/*                                                                */
+/******************************************************************/
+@Include  #SSVARS
+
+WSC1I1:  msgtxt
+/*-------------------------------------------------------------------*/
+/* CST SOAP Application - Customer Inquiry                           */
+/*-------------------------------------------------------------------*/
+
+
+OI01:    Onin Then Do
+           S5 = S5 || Translate(Buffer,A2E)
+         End
+OI02:    Onin Buffer = '' Then Do
+           Found = On
+         End
+
+Found        = Off
+S5           = ''
+
+S2 = '<?xml version="1.0" encoding="UTF-8" ?>'                      ||,
+     '<soapenv:Envelope'                                            ||,
+     ' xmlns:q0="http://www.LGICUS01.SOAIC01.Request.com"'          ||,
+     ' xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"'   ||,
+     ' xmlns:xsd="http://www.w3.org/2001/XMLSchema"'                ||,
+     ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">'      ||,
+     '<soapenv:Body>'                                               ||,
+     '<q0:LGICUS01Operation>'                                       ||,
+     '<q0:ca>'                                                      ||,
+     '<q0:ca_request_id>01ICUS</q0:ca_request_id>'                  ||,
+     '<q0:ca_return_code>0</q0:ca_return_code>'                     ||,
+     '<q0:ca_customer_num>'                                         ||,
+      Right(Char(Random(1,10)),10,'0')                              ||,
+     '</q0:ca_customer_num>'                                        ||,
+     '<q0:ca_first_name />'                                         ||,
+     '<q0:ca_last_name />'                                          ||,
+     '<q0:ca_dob />'                                                ||,
+     '<q0:ca_house_name />'                                         ||,
+     '<q0:ca_house_num />'                                          ||,
+     '<q0:ca_postcode />'                                           ||,
+     '<q0:ca_num_policies>0</q0:ca_num_policies>'                   ||,
+     '<q0:ca_policy_data />'                                        ||,
+     '</q0:ca>'                                                     ||,
+     '</q0:LGICUS01Operation>'                                      ||,
+     '</soapenv:Body>'                                              ||,
+     '</soapenv:Envelope>'
+
+S1 =  'POST /GENAPP/LGICUS01 HTTP/1.1'                 ||,
+     '0D25'x                                           ||,
+      'Host: WINMVSA0.hursley.ibm.com:12001'           ||,
+     '0D25'x                                           ||,
+      'Content-Type: text/xml; charset=utf-8'          ||,
+     '0D25'x                                           ||,
+      'Content-Length: ' || Char(Length(S2))           ||,
+     '0D25'x                                           ||,
+      'Accept: application/soap'                       ||,
+      '+xml, application/dime, multipar'               ||,
+      't/related, text/*'                              ||,
+     '0D25'x                                           ||,
+      'User-Agent: IBM Web Services Explorer'          ||,
+     '0D25'x                                           ||,
+      'Cache-Control: no-cache'                        ||,
+     '0D25'x                                           ||,
+      'Pragma: no-cache'                               ||,
+     '0D25'x                                           ||,
+     'SOAPAction: ""'                                  ||,
+     '0D25'x                                           ||,
+      'Connection: close'                              ||,
+     '0D25'x                                           ||,
+     '0D25'x
+
+Type Translate(S1,E2A)||Translate(S2,E2A)
+Transmit and Wait Until OnIn Found = ON
+
+@Include WASerror
+
+endtxt

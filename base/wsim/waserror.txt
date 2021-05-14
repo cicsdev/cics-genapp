@@ -1,0 +1,23 @@
+/******************************************************************/
+/*                                                                */
+/* (C) Copyright IBM Corp. 2011, 2020                             */
+/*                                                                */
+/******************************************************************/
+/*-------------------------------------------------------------------*/
+/* CST SOAP Application - Error handle and Display                   */
+/*-------------------------------------------------------------------*/
+
+I4 = E2D(Substr(S5,10,3))
+
+If I4 = 200 Then Do
+  I1 = Pos('<ca_return_code>',S5)
+  I2 = Pos('</ca_return_code>',S5)
+  I3 = I1 + 12
+  S1 = Substr(S5,I3,I2-I3)
+  I1 = E2D(S1)
+  If I1 > 0 Then
+    Say MSGTXTID() 'Failed with HTTP' Char(I4) 'Application' Char(I1)
+End
+            Else Do
+  Say MSGTXTID() 'Failed with HTTP' Char(I4)
+End

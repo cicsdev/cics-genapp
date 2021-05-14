@@ -1,0 +1,24 @@
+*
+* (C) Copyright IBM Corp. 2011, 2020
+*
+Cmake  MSGUTBL      (FORD),
+      (MAZDA),
+      (HONDA),
+      (CADALLAC),
+      (FERRARI),
+      (HUYUNDAI),
+      (PEUGEOT),
+      (RENNAULT),
+      (CITROEN),
+      (LAND ROVER),
+      (MINI),
+      (VOLKSWAGEN),
+      (GMC),
+      (VAUXHALL),
+      (PORSCHE),
+      (BMW),
+      (MERCEDES),
+      (OLDSMOBILE),
+      (TOYOTA),
+      (LADA),
+      (SKODA)
