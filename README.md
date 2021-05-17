@@ -34,13 +34,13 @@ This extension demonstrates how you can use Java and OSGi together with COBOL to
 
 ### GenApp policy search extension using cloud enablement ([policy-cloud/](policy-cloud/))
 
-This extension is based on the Policy Search OSGi Extension. The content is updated to use Cloud Enablement features
+This extension is based on the Policy Search OSGi Extension. The content is updated to use Cloud enablement features
 provided in CICS TS 5.1. It also demonstrates how to create a single rich CICS Application by using a combination of
 languages, namely Java, and COBOL.
 
 ### GenApp policy search extension using Liberty Profile ([policy-liberty/](policy-liberty/))
 
-This extension demonstrates how you can use the IBM WebSphere Liberty profile in CICS to use Java and Web Technologies
+This extension demonstrates how you can use Liberty in CICS to use Java and Web Technologies
 together with COBOL to create rich CICS applications.
 
 ### GenApp business rules extension ([business-rules/](business-rules/))
