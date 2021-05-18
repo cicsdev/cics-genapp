@@ -18,39 +18,10 @@ in an IBM Db2 database.
 GenApp illustrates how a 3270-based 'green screen' application can be transformed to use many of the rich features and
 functions of the newer releases of CICS TS.
 
-## Application components
-
-The application is comprised of a base component with several optional extensions. These components are listed below
-with links to their respective subdirectories.
-
 ### GenApp base ([base/](base/README.md))
 
 The general insurance application is a working COBOL application that you can use to try out different features of CICS,
 including modernizing applications.
-
-### GenApp policy search extension using Java & OSGi ([policy-osgi/](policy-osgi/))
-
-This extension demonstrates how you can use Java and OSGi together with COBOL to create rich CICS applications.
-
-### GenApp policy search extension using cloud enablement ([policy-cloud/](policy-cloud/))
-
-This extension is based on the Policy Search OSGi Extension. The content is updated to use Cloud enablement features
-provided in CICS TS 5.1. It also demonstrates how to create a single rich CICS Application by using a combination of
-languages, namely Java, and COBOL.
-
-### GenApp policy search extension using Liberty Profile ([policy-liberty/](policy-liberty/))
-
-This extension demonstrates how you can use Liberty in CICS to use Java and Web Technologies
-together with COBOL to create rich CICS applications.
-
-### GenApp business rules extension ([business-rules/](business-rules/))
-
-This extension demonstrates how you can integrate CICS applications with business rule technology to create agile and
-flexible applications.
-
-### GenApp Lite ([lite/](lite/))
-
-This implementation provides most of the GenApp functionality without the dependency on Db2.
 
 ## Possible Uses
 
