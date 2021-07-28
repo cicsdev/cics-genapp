@@ -58,37 +58,37 @@ WSIMMSX = STRIP(PDSMSGS,,"'")
 "ISPEXEC VPUT (KSDSPOL KSDSCUS SOURCEX LOADX MAPCOPX DBRMLIX)"
 "ISPEXEC VPUT (WSIMLGX WSIMWSX WSIMMSX)"
 
-If SYSDSN(PDSDBRM) ^= 'OK' Then Do
+If SYSDSN(PDSDBRM) \= 'OK' Then Do
   "ALLOC DD(DB1) DA("||PDSDBRM||") New Like('"PDSMEMin"')"
   If RC = 0 Then "Free DD(DB1)"
 End
-If SYSDSN(PDSMAPC) ^= 'OK' Then Do
+If SYSDSN(PDSMAPC) \= 'OK' Then Do
   "ALLOC DD(MC1) DA("||PDSMAPC||") New Like('"PDSMEMin"')"
   If RC = 0 Then "Free DD(MC1)"
 End
-If SYSDSN(PDSLOAD) ^= 'OK' Then Do
+If SYSDSN(PDSLOAD) \= 'OK' Then Do
   "ALLOC DD(LM1) DA("||PDSLOAD||") New Space(5,2) Cylinders " ||,
     "BlkSize(6144) Dir(8) DSorg(PO) Recfm(U) Dsntype(LIBRARY)"
   If RC = 0 Then "Free DD(LM1)"
 End
-If SYSDSN(PDSMSGS) ^= 'OK' Then Do
+If SYSDSN(PDSMSGS) \= 'OK' Then Do
   "ALLOC DD(DB1) DA("||PDSMSGS||") New Like('"PDSMEMin"')"
   If RC = 0 Then "Free DD(DB1)"
 End
-If SYSDSN(WSIMLOG) ^= 'OK' Then Do
+If SYSDSN(WSIMLOG) \= 'OK' Then Do
   "ALLOC DD(LM1) DA("||WSIMLOG||") New Space(20,5) Cylinders " ||,
     "LrecL(27994) BlkSize(27998) Dir(0) DSorg(PS) Recfm(V B)"
   If RC = 0 Then "Free DD(LM1)"
 End
 
 ISPEXEC "LMINIT DATAID(IN) DATASET('"PDSMEMin"')"
-If RC ^= 0 Then Do
+If RC \= 0 Then Do
   Say PDSMEMin 'Return code' RC 'from LMINIT'
   Exit RC
 End
 
 ISPEXEC 'LMOPEN DATAID(&IN)'
-If RC ^= 0 Then Do
+If RC \= 0 Then Do
   Say PDSMEMin 'Return code' RC 'from LMOPEN'
   Exit RC
 End
@@ -97,11 +97,11 @@ List_rc  = 0
 Counter  = 0
 Memname. = ''
 
-Do Until List_rc ^= 0
+Do Until List_rc \= 0
   ISPEXEC 'LMMLIST DATAID(&IN) OPTION(LIST) MEMBER(MEMBER)'
   List_rc = RC
   If RC = 0 Then Do
-    If Left(Member,1) ^= '@' then Do
+    If Left(Member,1) \= '@' then Do
       Counter = Counter + 1
       Member = Space(Member)
       MemInName.Counter  = PDSMEMIN || '(' || Member || ')'
@@ -116,13 +116,13 @@ End
 Say '===> ' Counter 'Members customised'
 
 ISPEXEC 'LMCLOSE DATAID(&IN)'
-If RC ^= 0 Then Do
+If RC \= 0 Then Do
   Say PDSMEMin 'Return code' RC 'from LMCLOSE'
   Exit RC
 End
 
 ISPEXEC 'LMFREE DATAID(&IN)'
-If RC ^= 0 Then Do
+If RC \= 0 Then Do
   Say PDSMEMin 'Return code' RC 'from LMFREE'
   Exit RC
 End
