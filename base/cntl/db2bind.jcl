@@ -9,8 +9,6 @@
 //SYSPRINT DD  SYSOUT=*
 //SYSTSPRT DD  SYSOUT=*
 //SYSUDUMP DD  SYSOUT=*
-//SYSIN  DD *
-/*
 //SYSTSIN DD *
 DSN SYSTEM(<DB2SSID>)
 BIND PACKAGE (GENASA1)                                    -
@@ -140,6 +138,11 @@ BIND PLAN (GENAONE)                                       -
 
 RUN PROGRAM(DSNTIAD) PLAN(<DB2PLAN>) -
     LIB('<DB2RUN>.RUNLIB.LOAD')
+
 END
+/*
+//SYSIN  DD *
+  SET CURRENT SQLID='<SQLID>' ;
+  GRANT EXECUTE ON PLAN GENAONE TO PUBLIC;
 /*
 //
