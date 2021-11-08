@@ -6,7 +6,7 @@
 //JOBLIB   DD DSN=<DB2HLQ>.SDSNLOAD,DISP=SHR
 //*
 //********************************************************************
-//*   CREATE STORAGE GROUP/DATABASES/TABLESPACES                     *
+//*   DELETE STORAGE GROUP/DATABASE/TABLESPACES/TABLES
 //********************************************************************
 //DELETE  EXEC PGM=IKJEFT01,DYNAMNBR=20
 //SYSTSPRT DD SYSOUT=*
