@@ -398,7 +398,6 @@ CREATE UNIQUE INDEX <DB2DBID>.iClaim
   GRANT ALL PRIVILEGES ON TABLE <DB2DBID>.endowment TO PUBLIC;
   GRANT ALL PRIVILEGES ON TABLE <DB2DBID>.commercial TO PUBLIC;
   GRANT ALL PRIVILEGES ON TABLE <DB2DBID>.claim    TO PUBLIC;
-  GRANT EXECUTE ON PLAN GENAONE TO PUBLIC;
 /*
 //*
 //********************************************************************
