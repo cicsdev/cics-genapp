@@ -12,9 +12,15 @@ run in a CICS topology and CICSplex. You must also have a supported version of D
 
 ## About this task
 
-The application is supplied as a git repository. You must download the repository to your workstation, either as a zip
-file or by cloning the repository. Next use FTP to copy the correct files to your z Systems machine. The files include
-a customization job so you can easily configure the application for your environment.
+The application is supplied as a Git repository. This repository may be cloned directly to a UNIX System Services
+(USS) environment, or downloaded to your workstation.
+
+To clone the repository to a USS environment, use a Git client from the USS command prompt.
+
+To download the repository to your workstation, either download as a zip file or clone the repository using a Git
+client. Next use FTP to copy the correct files to your z Systems machine.
+
+The files include a customization job so you can easily configure the application for your environment.
 
 ## Procedure: installation from USS
 
