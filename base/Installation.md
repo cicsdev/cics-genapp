@@ -12,16 +12,42 @@ run in a CICS topology and CICSplex. You must also have a supported version of D
 
 ## About this task
 
-The application is supplied as a git repository. You must download the repository to your workstation, either as a zip
-file or by cloning the repository. Next use FTP to copy the correct files to your z Systems machine. The files include
-a customization job so you can easily configure the application for your environment.
+The application is supplied as a Git repository. This repository may be cloned directly to a UNIX System Services
+(USS) environment, or downloaded to your workstation.
 
-## Procedure
+To clone the repository to a USS environment, use a Git client at the USS command prompt. Use the supplied
+installation shell script to copy files to MVS data sets.
+
+To download the repository to your workstation, either download as a zip file or clone the repository using a Git
+client. Use FTP to copy files to MVS data sets.
+
+The files include a customization job so you can easily configure the application for your environment.
+
+## Procedure: installation from USS
+
+Use this procedure if you wish to clone the Git repository directly to a USS environment.
+
+**Note:** the Git client must support the zos-working-tree-encoding attribute for files, such as
+Rocket Software Git for z/OS version 2.26.2 and later.
+
+1. Clone this repository directly into a USS environment.
+
+1. Edit the [install.sh](bin/install.sh) script to verify the data set high level qualifier is correct.
+
+1. Execute the [install.sh](bin/install.sh) script to allocate data sets and copy the files. For example,
+issue `./install.sh` in the `base/bin` directory.
+
+1. Follow the steps described in the "Customization" section below.
+
+## Procedure: installation from workstation
+
+Use this procedure if you wish to clone or download the Git repository onto your workstation and transfer
+files to MVS data sets using FTP.
 
 1. Clone this repository or download it as a zip file and extract to your workstation.
 
 1. For each of these directories, follow the instructions in the README for guidance on transferring their
-contents to the z Systems machine:
+contents to the MVS data sets:
    1. [cntl/](cntl/README.md) - JCL to build the environment for the application
    1. [exec/](exec/README.md) - REXX code that customizes the JCL
    1. [data/](data/README.md) - Sample data for the application
@@ -29,7 +55,14 @@ contents to the z Systems machine:
    1. [wsim/](wsim/README.md) - Sample IBM Workload Simulator scripts - to avoid errors this library should be
       included, even if you are not using the IBM Workload Simulator product
 
-1. Customize the member CUST1 in the *userid*.GENAPP.EXEC data set as described in the Customization section below.
+1. Follow the steps described in the "Customization" section below.
+
+## Customization
+
+The CUST1 Rexx script allows for customization of the GenApp sample to suit your environment. To apply this
+customization, use the following procedure:
+
+1. Customize the member CUST1 in the *userid*.GENAPP.EXEC data set as described below.
 
 1. Run the *userid*.GENAPP.EXEC(CUST1) script to customize the JCL in the CNTL data set. For example, enter the TSO
 command:
@@ -38,8 +71,6 @@ command:
 
    The script copies the members and updates them with your values. Each member name is prefixed with @ to indicate that
    it has been customized. You can run the customization step as many times as you want.
-
-## Customization
 
 The values in the *userid*.GENAPP.EXEC(CUST1) member include settings for a CICS topology and CICSPlex SM, which you can
 ignore. Replace the following values with your own:
