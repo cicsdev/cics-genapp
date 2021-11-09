@@ -1,5 +1,11 @@
 # Sample input data sets
 
+This procedure is not required if you have cloned the Git repository directly to a UNIX System
+Services (USS) environment.
+
+Use this procedure if you have cloned the Git repository to your workstation and are transferring the
+files to MVS data sets using FTP.
+
 The files ksdscust.txt and ksdspoly.txt contain sample data used in the general insurance application.
 Do not edit these files before transferring to the z/OS system as this may introduce unwanted control characters.
 

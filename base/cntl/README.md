@@ -1,5 +1,11 @@
 # *userid*.GENAPP.CNTL data set
 
+This procedure is not required if you have cloned the Git repository directly to a UNIX System
+Services (USS) environment.
+
+Use this procedure if you have cloned the Git repository to your workstation and are transferring the
+files to MVS data sets using FTP.
+
 In all of the following commands, substitute *userid* with your z/OS userid.
 
 To create a suitable partitioned data set:
