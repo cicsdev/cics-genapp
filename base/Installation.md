@@ -27,7 +27,8 @@ The files include a customization job so you can easily configure the applicatio
 
 Use this procedure if you wish to clone the Git repository directly to a USS environment.
 
-**Note:** the Git client must support the zos-working-tree-encoding attribute for files.
+**Note:** the Git client must support the zos-working-tree-encoding attribute for files, such as
+Rocket Software Git for z/OS version 2.26.2 and later.
 
 1. Clone this repository directly into a USS environment.
 
