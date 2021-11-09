@@ -1,5 +1,9 @@
 #!/bin/sh
 
+###
+### (C) Copyright IBM Corp. 2021
+###
+
 # High level qualifier of the GenApp target data sets - by default is username.GENAPP
 GENAPP=${USER}.GENAPP
 
