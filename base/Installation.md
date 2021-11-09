@@ -15,16 +15,17 @@ run in a CICS topology and CICSplex. You must also have a supported version of D
 The application is supplied as a Git repository. This repository may be cloned directly to a UNIX System Services
 (USS) environment, or downloaded to your workstation.
 
-To clone the repository to a USS environment, use a Git client from the USS command prompt.
+To clone the repository to a USS environment, use a Git client at the USS command prompt. Use the supplied
+installation shell script to copy files to MVS data sets.
 
 To download the repository to your workstation, either download as a zip file or clone the repository using a Git
-client. Next use FTP to copy the correct files to your z Systems machine.
+client. Use FTP to copy files to MVS data sets.
 
 The files include a customization job so you can easily configure the application for your environment.
 
 ## Procedure: installation from USS
 
-Use this procedure if you wish to clone the Git repository directly to a UNIX System Services (USS) environment.
+Use this procedure if you wish to clone the Git repository directly to a USS environment.
 
 **Note:** the Git client must support the zos-working-tree-encoding attribute for files.
 
@@ -32,7 +33,8 @@ Use this procedure if you wish to clone the Git repository directly to a UNIX Sy
 
 1. Edit the [install.sh](bin/install.sh) script to verify the data set high level qualifier is correct.
 
-1. Execute the [install.sh](bin/install.sh) script to allocate data sets and copy the files.
+1. Execute the [install.sh](bin/install.sh) script to allocate data sets and copy the files. For example,
+issue `./install.sh` in the `base/bin` directory.
 
 1. Follow the steps described in the "Customization" section below.
 
