@@ -11,28 +11,28 @@ GENAPP=${USER}.GENAPP
 SCRIPT_DIR=$(dirname "$0")
 
 # Path to the GenApp base component
-BASEDIR="${SCRIPT_DIR}/.."
+BASE_DIR="${SCRIPT_DIR}/.."
 
 # Copy all of the cntl/ files
 tsocmd "ALLOCATE DSNAME('${GENAPP}.CNTL') NEW SPACE(2,1) CYLINDERS BLKSIZE(0) LRECL(80) RECFM(F,B) DSORG(PO) DSNTYPE(LIBRARY)"
-cp -O u -A -T ${BASEDIR}/cntl/*.jcl "//'${GENAPP}.CNTL'"
+cp -O u -A -T ${BASE_DIR}/cntl/*.jcl "//'${GENAPP}.CNTL'"
 
 # Copy all of the exec/ files
 tsocmd "ALLOCATE DSNAME('${GENAPP}.EXEC') NEW SPACE(1,1) CYLINDERS BLKSIZE(0) LRECL(80) RECFM(F,B) DSORG(PO) DSNTYPE(LIBRARY)"
-cp -O u -A -T ${BASEDIR}/exec/*.rexx "//'${GENAPP}.EXEC'"
+cp -O u -A -T ${BASE_DIR}/exec/*.rexx "//'${GENAPP}.EXEC'"
 
 # Copy all of the src/ files
 tsocmd "ALLOCATE DSNAME('${GENAPP}.SRC')  NEW SPACE(2,1) CYLINDERS BLKSIZE(0) LRECL(80) RECFM(F,B) DSORG(PO) DSNTYPE(LIBRARY)"
-cp -O u -A -T ${BASEDIR}/src/*.bms "//'${GENAPP}.SRC'"
-cp -O u -A -T ${BASEDIR}/src/*.cbl "//'${GENAPP}.SRC'"
-cp -O u -A -T ${BASEDIR}/src/*.cpy "//'${GENAPP}.SRC'"
-cp -O u -A -T ${BASEDIR}/src/*.txt "//'${GENAPP}.SRC'"
+cp -O u -A -T ${BASE_DIR}/src/*.bms "//'${GENAPP}.SRC'"
+cp -O u -A -T ${BASE_DIR}/src/*.cbl "//'${GENAPP}.SRC'"
+cp -O u -A -T ${BASE_DIR}/src/*.cpy "//'${GENAPP}.SRC'"
+cp -O u -A -T ${BASE_DIR}/src/*.txt "//'${GENAPP}.SRC'"
 
 # Copy all of the wsim/ files
 tsocmd "ALLOCATE DSNAME('${GENAPP}.WSIM') NEW SPACE(4,1) CYLINDERS BLKSIZE(0) LRECL(80) RECFM(F,B) DSORG(PO) DSNTYPE(LIBRARY)"
-cp -O u -A -T ${BASEDIR}/wsim/*.txt "//'${GENAPP}.WSIM'"
+cp -O u -A -T ${BASE_DIR}/wsim/*.txt "//'${GENAPP}.WSIM'"
 
 # Copy the data/ files
-cp -O u -T -W "seqparms='RECFM=FB,LRECL=225,BLKSIZE=0,SPACE=(CYL,(1,1))'" ${BASEDIR}/data/ksdscust.txt "//'${GENAPP}.KSDSCUST.TXT'"
-cp -O u -T -W "seqparms='RECFM=FB,LRECL=64,BLKSIZE=0,SPACE=(CYL,(1,1))'" ${BASEDIR}/data/ksdspoly.txt "//'${GENAPP}.KSDSPOLY.TXT'"
+cp -O u -T -W "seqparms='RECFM=FB,LRECL=225,BLKSIZE=0,SPACE=(CYL,(1,1))'" ${BASE_DIR}/data/ksdscust.txt "//'${GENAPP}.KSDSCUST.TXT'"
+cp -O u -T -W "seqparms='RECFM=FB,LRECL=64,BLKSIZE=0,SPACE=(CYL,(1,1))'" ${BASE_DIR}/data/ksdspoly.txt "//'${GENAPP}.KSDSPOLY.TXT'"
 
