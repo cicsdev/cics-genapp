@@ -29,5 +29,6 @@ tsocmd "ALLOCATE DSNAME('${GENAPP}.WSIM') NEW SPACE(4,1) CYLINDERS BLKSIZE(0) LR
 cp -O u -S d=.txt -T ${BASEDIR}/wsim/*.txt "//'${GENAPP}.WSIM'"
 
 # Copy the data/ files
-cp -O u -T -W seqparms="RECFM=FB LRECL=225 BLKSIZE=0 SPACE=(CYL,(1,1))" ${BASEDIR}/data/ksdscust.txt "//'${GENAPP}.KSDSCUST.TXT"
-cp -O u -T -W seqparms="RECFM=FB LRECL=64  BLKSIZE=0 SPACE=(CYL,(1,1))" ${BASEDIR}/data/ksdspoly.txt "//'${GENAPP}.KSDSPOLY.TXT"
+cp -O u -T -W "seqparms='RECFM=FB,LRECL=225,BLKSIZE=0,SPACE=(CYL,(1,1))'" ${BASEDIR}/data/ksdscust.txt "//'${GENAPP}.KSDSCUST.TXT'"
+cp -O u -T -W "seqparms='RECFM=FB,LRECL=64,BLKSIZE=0,SPACE=(CYL,(1,1))'" ${BASEDIR}/data/ksdspoly.txt "//'${GENAPP}.KSDSPOLY.TXT'"
+
