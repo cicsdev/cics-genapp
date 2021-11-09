@@ -46,7 +46,7 @@ files to MVS data sets using FTP.
 1. Clone this repository or download it as a zip file and extract to your workstation.
 
 1. For each of these directories, follow the instructions in the README for guidance on transferring their
-contents to the z Systems machine:
+contents to the MVS data sets:
    1. [cntl/](cntl/README.md) - JCL to build the environment for the application
    1. [exec/](exec/README.md) - REXX code that customizes the JCL
    1. [data/](data/README.md) - Sample data for the application
