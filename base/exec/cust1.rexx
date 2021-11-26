@@ -31,63 +31,73 @@ CMASYSID  = 'ICMA'
 WUIAPPL   = 'IYI0WUI'
 WUISYSID  = 'IWUI'
 
-"ISPEXEC VPUT (CICSHLQ CPSMHLQ CICSLIC USRHLQ COBOLHLQ DB2HLQ CEEHLQ)"
-"ISPEXEC VPUT (CSDNAME DB2RUN SQLID DB2SSID DB2DBID DB2CCSID DB2PLAN)"
-"ISPEXEC VPUT (TORAPPL AORAPPL DORAPPL TORSYSID AORSYSID DORSYSID)"
-"ISPEXEC VPUT (CMASAPPL CMASYSID WUIAPPL WUISYSID WSIMHLQ ZFSHOME)"
+/* Copy variables to the pool */
+'ISPEXEC VPUT (CICSHLQ CPSMHLQ CICSLIC USRHLQ COBOLHLQ DB2HLQ CEEHLQ)'
+'ISPEXEC VPUT (CSDNAME DB2RUN SQLID DB2SSID DB2DBID DB2CCSID DB2PLAN)'
+'ISPEXEC VPUT (TORAPPL AORAPPL DORAPPL TORSYSID AORSYSID DORSYSID)'
+'ISPEXEC VPUT (CMASAPPL CMASYSID WUIAPPL WUISYSID WSIMHLQ ZFSHOME)'
 
-PDSexec = Substr(PDSMEMin,1,Pos('.CNTL',PDSMEMin)-1) || '.EXEC'
-"ALTLIB ACTIVATE APPLICATION(EXEC)  DATASET('"||PDSexec||"')"
+/* Establish a HLQ for the GenApp data sets */
+PDSHLQ = Substr(PDSMEMin,1,Pos('.CNTL',PDSMEMin)-1)
 
-PDSDBRM = "'" || Left(PDSMEMin,Pos('.CNTL',PDSMEMin)-1) || ".DBRMLIB'"
-PDSMAPC = "'" || Left(PDSMEMin,Pos('.CNTL',PDSMEMin)-1) || ".MAPCOPY'"
-PDSLOAD = "'" || Left(PDSMEMin,Pos('.CNTL',PDSMEMin)-1) || ".LOAD'"
-PDSMSGS = "'" || Left(PDSMEMin,Pos('.CNTL',PDSMEMin)-1) || ".MSGTXT'"
-WSIMLOG = "'" || Left(PDSMEMin,Pos('.CNTL',PDSMEMin)-1) || ".LOG'"
-WSIMSTL =        Left(PDSMEMin,Pos('.CNTL',PDSMEMin)-1) || ".WSIM"
-"ISPEXEC VPUT (PDSDBRM PDSMACP PDSLOAD PDSMSGS WSIMLOG WSIMSTL)"
-SOURCEX =        Left(PDSMEMin,Pos('.CNTL',PDSMEMin)-1) || ".SRC"
-KSDSCUS =     Left(PDSMEMin,Pos('.CNTL',PDSMEMin)-1) || ".KSDSCUST.TXT"
-KSDSPOL =     Left(PDSMEMin,Pos('.CNTL',PDSMEMin)-1) || ".KSDSPOLY.TXT"
-LOADX   = STRIP(PDSLOAD,,"'")
-MAPCOPX = STRIP(PDSMAPC,,"'")
-DBRMLIX = STRIP(PDSDBRM,,"'")
-WSIMLGX = STRIP(WSIMLOG,,"'")
-WSIMWSX = STRIP(WSIMSTL,,"'")
-WSIMMSX = STRIP(PDSMSGS,,"'")
-"ISPEXEC VPUT (KSDSPOL KSDSCUS SOURCEX LOADX MAPCOPX DBRMLIX)"
-"ISPEXEC VPUT (WSIMLGX WSIMWSX WSIMMSX)"
+/* Location of Rexx code */
+PDSexec = PDSHLQ || '.EXEC'
+"ALTLIB ACTIVATE APPLICATION(EXEC) DATASET('" || PDSexec || "')"
 
+/* Variables used for substitution when customizing */
+PDSDBRM = "'" || PDSHLQ || ".DBRMLIB'"
+PDSMAPC = "'" || PDSHLQ || ".MAPCOPY'"
+PDSLOAD = "'" || PDSHLQ || ".LOAD'"
+PDSMSGS = "'" || PDSHLQ || ".MSGTXT'"
+WSIMLOG = "'" || PDSHLQ || ".LOG'"
+WSIMSTL =        PDSHLQ || ".WSIM"
+SOURCEX =        PDSHLQ || ".SRC"
+KSDSCUS =        PDSHLQ || ".KSDSCUST.TXT"
+KSDSPOL =        PDSHLQ || ".KSDSPOLY.TXT"
+LOADX   = Strip(PDSLOAD,,"'")
+MAPCOPX = Strip(PDSMAPC,,"'")
+DBRMLIX = Strip(PDSDBRM,,"'")
+WSIMLGX = Strip(WSIMLOG,,"'")
+WSIMWSX = Strip(WSIMSTL,,"'")
+WSIMMSX = Strip(PDSMSGS,,"'")
+
+/* Copy variables to the pool */
+'ISPEXEC VPUT (PDSDBRM PDSMACP PDSLOAD PDSMSGS WSIMLOG WSIMSTL)'
+'ISPEXEC VPUT (KSDSPOL KSDSCUS SOURCEX LOADX MAPCOPX DBRMLIX)'
+'ISPEXEC VPUT (WSIMLGX WSIMWSX WSIMMSX)'
+
+/* Allocate data sets if required */
 If SYSDSN(PDSDBRM) \= 'OK' Then Do
-  "ALLOC DD(DB1) DA("||PDSDBRM||") New Like('"PDSMEMin"')"
+  "ALLOC DD(DB1) DA(" || PDSDBRM || ") New Like('" || PDSMEMin || "')"
   If RC = 0 Then "Free DD(DB1)"
 End
 If SYSDSN(PDSMAPC) \= 'OK' Then Do
-  "ALLOC DD(MC1) DA("||PDSMAPC||") New Like('"PDSMEMin"')"
+  "ALLOC DD(MC1) DA(" || PDSMAPC || ") New Like('" || PDSMEMin || "')"
   If RC = 0 Then "Free DD(MC1)"
 End
 If SYSDSN(PDSLOAD) \= 'OK' Then Do
-  "ALLOC DD(LM1) DA("||PDSLOAD||") New Space(5,2) Cylinders " ||,
+  "ALLOC DD(LM1) DA(" || PDSLOAD || ") New Space(5,2) Cylinders " ||,
     "BlkSize(6144) Dir(8) DSorg(PO) Recfm(U) Dsntype(LIBRARY)"
   If RC = 0 Then "Free DD(LM1)"
 End
 If SYSDSN(PDSMSGS) \= 'OK' Then Do
-  "ALLOC DD(DB1) DA("||PDSMSGS||") New Like('"PDSMEMin"')"
+  "ALLOC DD(DB1) DA(" || PDSMSGS || ") New Like('" || PDSMEMin || "')"
   If RC = 0 Then "Free DD(DB1)"
 End
 If SYSDSN(WSIMLOG) \= 'OK' Then Do
-  "ALLOC DD(LM1) DA("||WSIMLOG||") New Space(20,5) Cylinders " ||,
+  "ALLOC DD(LM1) DA(" || WSIMLOG || ") New Space(20,5) Cylinders " ||,
     "LrecL(27994) BlkSize(27998) Dir(0) DSorg(PS) Recfm(V B)"
   If RC = 0 Then "Free DD(LM1)"
 End
 
-ISPEXEC "LMINIT DATAID(IN) DATASET('"PDSMEMin"')"
+/* Open the input data set */
+"ISPEXEC LMINIT DATAID(IN) DATASET('" || PDSMEMin || "')"
 If RC \= 0 Then Do
   Say PDSMEMin 'Return code' RC 'from LMINIT'
   Exit RC
 End
 
-ISPEXEC 'LMOPEN DATAID(&IN)'
+'ISPEXEC LMOPEN DATAID(&IN)'
 If RC \= 0 Then Do
   Say PDSMEMin 'Return code' RC 'from LMOPEN'
   Exit RC
@@ -97,8 +107,9 @@ List_rc  = 0
 Counter  = 0
 Memname. = ''
 
+/* Perform replace on all members in data set not beginning '@' */
 Do Until List_rc \= 0
-  ISPEXEC 'LMMLIST DATAID(&IN) OPTION(LIST) MEMBER(MEMBER)'
+  'ISPEXEC LMMLIST DATAID(&IN) OPTION(LIST) MEMBER(MEMBER)'
   List_rc = RC
   If RC = 0 Then Do
     If Left(Member,1) \= '@' then Do
@@ -107,7 +118,8 @@ Do Until List_rc \= 0
       MemInName.Counter  = PDSMEMIN || '(' || Member || ')'
       MemOutName.Counter = PDSMEMOUT || '(' || Member || ')'
       MemName.Counter    = Member
-      'ISPEXEC EDIT DATAID('IN') Member(' || Member || ') Macro(MAC1)'
+      'ISPEXEC EDIT DATAID(' || IN || ') ' ||,
+               'Member(' || Member || ') Macro(MAC1)'
     End
   End
   MemName.0 = Counter
@@ -115,18 +127,20 @@ End
 
 Say '===> ' Counter 'Members customised'
 
-ISPEXEC 'LMCLOSE DATAID(&IN)'
+/* Close input data set */
+'ISPEXEC LMCLOSE DATAID(&IN)'
 If RC \= 0 Then Do
   Say PDSMEMin 'Return code' RC 'from LMCLOSE'
   Exit RC
 End
 
-ISPEXEC 'LMFREE DATAID(&IN)'
+'ISPEXEC LMFREE DATAID(&IN)'
 If RC \= 0 Then Do
   Say PDSMEMin 'Return code' RC 'from LMFREE'
   Exit RC
 End
 
+/* One change in the WSim data set */
 "ISPEXEC EDIT DATASET('" || WSIMSTL || "(ONCICS)') Macro(MAC1)"
 
 "ALTLIB DEACTIVATE APPLICATION(EXEC)"
