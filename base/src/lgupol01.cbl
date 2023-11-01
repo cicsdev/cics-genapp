@@ -36,15 +36,9 @@
        01  WS-DATE                     PIC X(10) VALUE SPACES.
 
        01  WS-POLICY-LENGTHS.
-           03 WS-CUSTOMER-LEN          PIC S9(4) COMP VALUE +72.
-           03 WS-POLICY-LEN            PIC S9(4) COMP VALUE +72.
-           03 WS-ENDOW-LEN             PIC S9(4) COMP VALUE +52.
-           03 WS-HOUSE-LEN             PIC S9(4) COMP VALUE +58.
-           03 WS-MOTOR-LEN             PIC S9(4) COMP VALUE +65.
            03 WS-FULL-ENDOW-LEN        PIC S9(4) COMP VALUE +124.
            03 WS-FULL-HOUSE-LEN        PIC S9(4) COMP VALUE +130.
            03 WS-FULL-MOTOR-LEN        PIC S9(4) COMP VALUE +137.
-           03 WS-SUMRY-ENDOW-LEN       PIC S9(4) COMP VALUE +25.
 
       * Error Message structure
        01  ERROR-MSG.
@@ -52,14 +46,7 @@
            03 FILLER                   PIC X     VALUE SPACES.
            03 EM-TIME                  PIC X(6)  VALUE SPACES.
            03 FILLER                   PIC X(9)  VALUE ' LGUPOL01'.
-           03 EM-VARIABLE.
-             05 FILLER                 PIC X(6)  VALUE ' CNUM='.
-             05 EM-CUSNUM              PIC X(10)  VALUE SPACES.
-             05 FILLER                 PIC X(6)  VALUE ' PNUM='.
-             05 EM-POLNUM              PIC X(10)  VALUE SPACES.
-             05 EM-SQLREQ              PIC X(16) VALUE SPACES.
-             05 FILLER                 PIC X(9)  VALUE ' SQLCODE='.
-             05 EM-SQLRC               PIC +9(5) USAGE DISPLAY.
+           03 EM-VARIABLE              PIC X(21) VALUE SPACES.
 
        01  CA-ERROR-MSG.
            03 FILLER                   PIC X(9)  VALUE 'COMMAREA='.
@@ -75,21 +62,8 @@
            03 WS-CA-HEADER-LEN         PIC S9(4) COMP VALUE +28.
            03 WS-REQUIRED-CA-LEN       PIC S9(4) COMP VALUE +0.
 
-      * Define a WS-VARYing length character string to contain actual
-      * amount of data that will be updated in Varchar field
-       01 WS-VARY-FIELD.
-          49 WS-VARY-LEN               PIC S9(4) COMP.
-          49 WS-VARY-CHAR              PIC X(3900).
-
        01 LGUPDB01                     PIC X(8) VALUE 'LGUPDB01'.
 
-
-      * Indicator variables for columns which could return nulls
-      *   if these are not specified and SQL FETCH tries to return
-      *   null value for a listed column it will FAIL with SQLCODE=
-       77  IND-BROKERID                PIC S9(4) COMP.
-       77  IND-BROKERSREF              PIC S9(4) COMP.
-       77  IND-PAYMENT                 PIC S9(4) COMP.
       *----------------------------------------------------------------*
       ******************************************************************
       *    L I N K A G E     S E C T I O N
@@ -131,10 +105,6 @@
            MOVE '00' TO CA-RETURN-CODE
            MOVE EIBCALEN TO WS-CALEN.
            SET WS-ADDR-DFHCOMMAREA TO ADDRESS OF DFHCOMMAREA.
-
-      * and save in error msg field incase required
-           MOVE CA-CUSTOMER-NUM TO EM-CUSNUM
-           MOVE CA-POLICY-NUM   TO EM-POLNUM
 
       *----------------------------------------------------------------*
       * Check which policy type is being requested                     *

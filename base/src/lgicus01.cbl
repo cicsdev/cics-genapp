@@ -43,31 +43,19 @@
            03 FILLER                   PIC X     VALUE SPACES.
            03 EM-TIME                  PIC X(6)  VALUE SPACES.
            03 FILLER                   PIC X(9)  VALUE ' LGICUS01'.
-           03 EM-VARIABLE.
-             05 FILLER                 PIC X(6)  VALUE ' CNUM='.
-             05 EM-CUSNUM              PIC X(10)  VALUE SPACES.
-             05 FILLER                 PIC X(6)  VALUE ' PNUM='.
-             05 EM-POLNUM              PIC X(10)  VALUE SPACES.
-             05 EM-SQLREQ              PIC X(16) VALUE SPACES.
-             05 FILLER                 PIC X(9)  VALUE ' SQLCODE='.
-             05 EM-SQLRC               PIC +9(5) USAGE DISPLAY.
+           03 EM-VARIABLE              PIC X(21) VALUE SPACES.
 
        01 CA-ERROR-MSG.
            03 FILLER                PIC X(9)  VALUE 'COMMAREA='.
            03 CA-DATA               PIC X(90) VALUE SPACES.
+       
+       01 LGICDB01                  PIC X(8) Value 'LGICDB01'.
 
-       01 LGICDB01                  PIC x(8) Value 'LGICDB01'.
-       01  ATRANID                     PIC X(4)       VALUE 'DSC1'.
       *----------------------------------------------------------------*
       * Fields to be used to calculate if commarea is large enough
        01  WS-COMMAREA-LENGTHS.
            03 WS-CA-HEADERTRAILER-LEN  PIC S9(4) COMP VALUE +18.
            03 WS-REQUIRED-CA-LEN       PIC S9(4)      VALUE +0.
-
-       01  WS-Resp                     PIC S9(8) Comp.
-       01  MQ-Hit                      PIC S9(4).
-       01  MQ-Read-Record              PIC X(80).
-       77  MQ-Control                  Pic X(8) Value 'GENAWMQC'.
 
            COPY LGPOLICY.
       *----------------------------------------------------------------*
@@ -118,8 +106,6 @@
              EXEC CICS RETURN END-EXEC
            END-IF
 
-           MOVE CA-CUSTOMER-NUM TO EM-CUSNUM
-
            PERFORM GET-CUSTOMER-INFO.
 
       *----------------------------------------------------------------*
@@ -133,37 +119,11 @@
       *----------------------------------------------------------------*
        GET-CUSTOMER-INFO.
 
-           Move 0 To MQ-Hit
-           Exec CICS ReadQ TS Queue(MQ-Control)
-                     Into(MQ-Read-Record)
-                     Resp(WS-RESP)
-                     Item(1)
-           End-Exec.
-           If WS-RESP = DFHRESP(NORMAL)
-              Perform With Test after Until WS-RESP > 0
-                 Exec CICS ReadQ TS Queue(MQ-Control)
-                     Into(MQ-Read-Record)
-                     Resp(WS-RESP)
-                     Next
-                 End-Exec
-                 If WS-RESP = DFHRESP(NORMAL) And
-                      MQ-Read-Record(1:6) = 'MQHIT='
-                      Move 1 To MQ-Hit
-                 End-If
-              End-Perform
-           End-If.
-
-           If MQ-Hit = 0
-             EXEC CICS LINK Program(LGICDB01)
-                 Commarea(DFHCOMMAREA)
-                 LENGTH(32500)
-             END-EXEC
-           Else
-             EXEC CICS LINK Program('AAAAAAAA')
-                 Commarea(DFHCOMMAREA)
-                 LENGTH(32500)
-             END-EXEC
-           End-If.
+           EXEC CICS LINK Program(LGICDB01)
+               Commarea(DFHCOMMAREA)
+               LENGTH(32500)
+           END-EXEC
+      
 
            EXIT.
 

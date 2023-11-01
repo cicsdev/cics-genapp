@@ -200,7 +200,7 @@
 
       *----------------------------------------------------------------*
       * Check which policy type is being requested                     *
-      *   and chec commarea length                                     *
+      *   and check commarea length                                    *
       *----------------------------------------------------------------*
 
       *    Call procedure to update required tables
@@ -390,50 +390,20 @@
            MOVE CA-E-TERM        TO DB2-E-TERM-SINT
            MOVE CA-E-SUM-ASSURED TO DB2-E-SUMASSURED-INT
 
-      *----------------------------------------------------------------*
-      *    There are 2 versions of UPDATE...                           *
-      *      one which updates all fields including Varchar            *
-      *      one which updates all fields Except Varchar               *
-      *----------------------------------------------------------------*
            MOVE ' UPDATE ENDOW ' TO EM-SQLREQ
-      *    Calculate length of varchar if any
-      *    this will be eibcalen minus required ca-length
-           SUBTRACT WS-REQUIRED-CA-LEN FROM EIBCALEN
-              GIVING WS-VARY-LEN
-
-           IF WS-VARY-LEN IS GREATER THAN ZERO
-      *      Commarea contains data for Varchar field
-             MOVE CA-E-PADDING-DATA
-                 TO WS-VARY-CHAR(1:WS-VARY-LEN)
-             EXEC SQL
-               UPDATE ENDOWMENT
-                 SET
-                   WITHPROFITS   = :CA-E-WITH-PROFITS,
-                     EQUITIES    = :CA-E-EQUITIES,
-                     MANAGEDFUND = :CA-E-MANAGED-FUND,
-                     FUNDNAME    = :CA-E-FUND-NAME,
-                     TERM        = :DB2-E-TERM-SINT,
-                     SUMASSURED  = :DB2-E-SUMASSURED-INT,
-                     LIFEASSURED = :CA-E-LIFE-ASSURED
-      *---> STEW     PADDINGDATA = :WS-VARY-FIELD
-                 WHERE
-                     POLICYNUMBER = :DB2-POLICYNUM-INT
-             END-EXEC
-           ELSE
-             EXEC SQL
-               UPDATE ENDOWMENT
-                 SET
-                   WITHPROFITS   = :CA-E-WITH-PROFITS,
-                     EQUITIES    = :CA-E-EQUITIES,
-                     MANAGEDFUND = :CA-E-MANAGED-FUND,
-                     FUNDNAME    = :CA-E-FUND-NAME,
-                     TERM        = :DB2-E-TERM-SINT,
-                     SUMASSURED  = :DB2-E-SUMASSURED-INT,
-                     LIFEASSURED = :CA-E-LIFE-ASSURED
-                 WHERE
-                     POLICYNUMBER = :DB2-POLICYNUM-INT
-             END-EXEC
-      *    END-IF
+           EXEC SQL
+             UPDATE ENDOWMENT
+               SET
+                 WITHPROFITS   = :CA-E-WITH-PROFITS,
+                   EQUITIES    = :CA-E-EQUITIES,
+                   MANAGEDFUND = :CA-E-MANAGED-FUND,
+                   FUNDNAME    = :CA-E-FUND-NAME,
+                   TERM        = :DB2-E-TERM-SINT,
+                   SUMASSURED  = :DB2-E-SUMASSURED-INT,
+                   LIFEASSURED = :CA-E-LIFE-ASSURED
+               WHERE
+                   POLICYNUMBER = :DB2-POLICYNUM-INT
+           END-EXEC
 
            IF SQLCODE NOT EQUAL 0
       *      Non-zero SQLCODE from UPDATE statement
@@ -476,7 +446,7 @@
              IF SQLCODE = 100
                MOVE '01' TO CA-RETURN-CODE
              ELSE
-               MOVE '01' TO CA-RETURN-CODE
+               MOVE '90' TO CA-RETURN-CODE
       *        Write error message to TD QUEUE(CSMT)
                PERFORM WRITE-ERROR-MESSAGE
              END-IF

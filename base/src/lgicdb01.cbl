@@ -45,8 +45,6 @@
            03 EM-VARIABLE.
              05 FILLER                 PIC X(6)  VALUE ' CNUM='.
              05 EM-CUSNUM              PIC X(10)  VALUE SPACES.
-             05 FILLER                 PIC X(6)  VALUE ' PNUM='.
-             05 EM-POLNUM              PIC X(10)  VALUE SPACES.
              05 EM-SQLREQ              PIC X(16) VALUE SPACES.
              05 FILLER                 PIC X(9)  VALUE ' SQLCODE='.
              05 EM-SQLRC               PIC +9(5) USAGE DISPLAY.
@@ -54,6 +52,7 @@
        01 CA-ERROR-MSG.
            03 FILLER                PIC X(9)  VALUE 'COMMAREA='.
            03 CA-DATA               PIC X(90) VALUE SPACES.
+       
       *----------------------------------------------------------------*
       * Fields to be used to calculate if commarea is large enough
        01  WS-COMMAREA-LENGTHS.

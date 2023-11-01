@@ -45,6 +45,8 @@
        01  CA-ERROR-MSG.
            03 FILLER                   PIC X(9)  VALUE 'COMMAREA='.
            03 CA-DATA                  PIC X(90) VALUE SPACES.
+       
+       01  CUSTOMER-RECORD-SIZE        PIC S9(4) BINARY VALUE 0225.
 
       *****************************************************************
       *    L I N K A G E     S E C T I O N
@@ -65,7 +67,7 @@
       *---------------------------------------------------------------*
            Exec CICS Write File('KSDSCUST')
                      From(CA-Customer-Num)
-                     Length(WS-Commarea-Len)
+                     Length(CUSTOMER-RECORD-SIZE)
                      Ridfld(CA-Customer-Num)
                      KeyLength(10)
                      RESP(WS-RESP)

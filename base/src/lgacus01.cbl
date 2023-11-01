@@ -41,14 +41,7 @@
            03 FILLER                   PIC X     VALUE SPACES.
            03 EM-TIME                  PIC X(6)  VALUE SPACES.
            03 FILLER                   PIC X(9)  VALUE ' LGACUS01'.
-           03 EM-VARIABLE.
-             05 FILLER                 PIC X(6)  VALUE ' CNUM='.
-             05 EM-CUSNUM              PIC X(10)  VALUE SPACES.
-             05 FILLER                 PIC X(6)  VALUE ' PNUM='.
-             05 EM-POLNUM              PIC X(10)  VALUE SPACES.
-             05 EM-SQLREQ              PIC X(16) VALUE SPACES.
-             05 FILLER                 PIC X(9)  VALUE ' SQLCODE='.
-             05 EM-SQLRC               PIC +9(5) USAGE DISPLAY.
+           03 EM-VARIABLE              PIC X(21) VALUE SPACES.
 
        01  CA-ERROR-MSG.
            03 FILLER                   PIC X(9)  VALUE 'COMMAREA='.
@@ -63,8 +56,6 @@
            03 WS-CA-HEADER-LEN         PIC S9(4) COMP VALUE +18.
            03 WS-REQUIRED-CA-LEN       PIC S9(4)      VALUE +0.
        77  LGACDB01                    PIC X(8)       VALUE 'LGACDB01'.
-       77  LGACVS01                    PIC X(8)       VALUE 'LGACVS01'.
-       77  ATRANID                     PIC X(4)       VALUE 'DSC1'.
 
       *    Include copybook for defintion of customer details length
            COPY LGPOLICY.
@@ -126,10 +117,7 @@
       *----------------------------------------------------------------*
       * Call routine to Insert row in DB2 Customer table               *
            PERFORM INSERT-CUSTOMER.
-           If CA-RETURN-CODE > 0
-             EXEC CICS RETURN END-EXEC
-           End-if.
-
+      
       *----------------------------------------------------------------*
       *
            EXEC CICS RETURN END-EXEC.

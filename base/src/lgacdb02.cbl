@@ -49,8 +49,6 @@
            03 EM-VARIABLE.
              05 FILLER                 PIC X(6)  VALUE ' CNUM='.
              05 EM-CUSNUM              PIC X(10)  VALUE SPACES.
-             05 FILLER                 PIC X(6)  VALUE ' PNUM='.
-             05 EM-POLNUM              PIC X(10)  VALUE SPACES.
              05 EM-SQLREQ              PIC X(16) VALUE SPACES.
              05 FILLER                 PIC X(9)  VALUE ' SQLCODE='.
              05 EM-SQLRC               PIC +9(5) USAGE DISPLAY.
@@ -59,17 +57,10 @@
            03 FILLER                   PIC X(9)  VALUE 'COMMAREA='.
            03 CA-DATA                  PIC X(90) VALUE SPACES.
       *----------------------------------------------------------------*
-       77 WS-CS-PASSWORD               PIC X(16) Value 'NewPass'.
-       77 WS-CS-STATE                  PIC X     VALUE 'N'.
-       77 WS-CA-COUNT                  PIC S9(9) COMP  Value 0.
 
       *----------------------------------------------------------------*
       * Definitions required for data manipulation                     *
       *----------------------------------------------------------------*
-      * Fields to be used to check that commarea is correct length
-       01  WS-COMMAREA-LENGTHS.
-           03 WS-CA-HEADER-LEN         PIC S9(4) COMP VALUE +18.
-           03 WS-REQUIRED-CA-LEN       PIC S9(4)      VALUE +0.
 
       *    Include copybook for defintion of customer details length
            COPY LGPOLICY.

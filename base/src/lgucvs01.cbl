@@ -2,9 +2,9 @@
       *                                                                *
       * (C) Copyright IBM Corp. 2011, 2020                             *
       *                                                                *
-      *                    ADD Customer                                *
+      *                    UPDATE Customer                                *
       *                                                                *
-      * VSAM KSDS Customer record ADD                                  *
+      * VSAM KSDS Customer record UPDATE                                  *
       *                                                                *
       ******************************************************************
        IDENTIFICATION DIVISION.
@@ -21,7 +21,6 @@
        01  WS-STARTCODE              PIC XX Value spaces.
        01  WS-SYSID                  PIC X(4) Value spaces.
        01  WS-Commarea-Len           PIC S9(4) COMP.
-       01  WS-Commarea-LenF          PIC S9(4) COMP.
        01  WS-Customer-Area          PIC X(1024) value Spaces.
       ******************************
       * Variables for time/date processing
@@ -48,6 +47,8 @@
            03 FILLER                   PIC X(9)  VALUE 'COMMAREA='.
            03 CA-DATA                  PIC X(90) VALUE SPACES.
 
+       01  CUSTOMER-RECORD-SIZE        PIC S9(4) BINARY VALUE 0225.
+
       *****************************************************************
       *    L I N K A G E     S E C T I O N
       *****************************************************************
@@ -64,7 +65,6 @@
       *
       *---------------------------------------------------------------*
            Move EIBCALEN To WS-Commarea-Len.
-           Move EIBCALEN To WS-Commarea-LenF.
       *---------------------------------------------------------------*
            Exec CICS Read File('KSDSCUST')
                      Into(WS-Customer-Area)
@@ -84,7 +84,7 @@
       *---------------------------------------------------------------*
            Exec CICS ReWrite File('KSDSCUST')
                      From(CA-Customer-Num)
-                     Length(WS-Commarea-LenF)
+                     Length(CUSTOMER-RECORD-SIZE)
                      RESP(WS-RESP)
            End-Exec.
            If WS-RESP Not = DFHRESP(NORMAL)

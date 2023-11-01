@@ -31,7 +31,7 @@
       * Run time (debug) infomation for this invocation
         01  WS-HEADER.
            03 WS-EYECATCHER            PIC X(16)
-                                        VALUE 'LGIPOL01------WS'.
+                                        VALUE 'LGIPDB01------WS'.
            03 WS-TRANSID               PIC X(4).
            03 WS-TERMID                PIC X(4).
            03 WS-TASKNUM               PIC 9(7).
@@ -49,7 +49,7 @@
            03 EM-DATE                  PIC X(8)  VALUE SPACES.
            03 FILLER                   PIC X     VALUE SPACES.
            03 EM-TIME                  PIC X(6)  VALUE SPACES.
-           03 FILLER                   PIC X(9)  VALUE ' LGIPOL01'.
+           03 FILLER                   PIC X(9)  VALUE ' LGIPDB01'.
            03 EM-VARIABLE.
              05 FILLER                 PIC X(6)  VALUE ' CNUM='.
              05 EM-CUSNUM              PIC X(10)  VALUE SPACES.
@@ -78,14 +78,7 @@
        01  END-POLICY-POS              PIC S9(4) COMP VALUE +1.
 
        01  ICOM-Record-Count           PIC S9(4) COMP.
-       01  ICOM-Length                 PIC S9(8) COMP Value 32767.
-       01  ICOM-Data-Length            PIC S9(8) binary.
-       01  ICOM-Pointer                Usage is Pointer.
-       01  ICOM-Pointer-Start          Usage is Pointer.
-       01  ICOM-Container              Pic X(16) Value 'ICOM-Data'.
-       01  ICOM-Channel                Pic X(16) Value 'ICOM'.
        01  WS-Request-ID               Pic X(6).
-       01  WS-Resp                     Pic S9(8) Comp.
 
       *----------------------------------------------------------------*
       *    DB2 CONTROL
@@ -153,24 +146,6 @@
                         Commercial.POLICYNUMBER   AND
                      Commercial.Zipcode =
                         :CA-B-POSTCODE  )
-           END-EXEC.
-      *----------------------------------------------------------------*
-           EXEC SQL
-             DECLARE CusClaim_Cursor Insensitive Scroll Cursor For
-             SELECT
-                   POLICY.CustomerNumber,
-                   ClaimNumber,
-                   CLAIM.PolicyNumber,
-                   ClaimDate,
-                   Paid,
-                   Value,
-                   Cause,
-                   Observations
-             FROM  POLICY,CLAIM
-             WHERE ( POLICY.POLICYNUMBER =
-                        CLAIM.POLICYNUMBER   AND
-                     POLICY.CustomerNumber =
-                        :DB2-CUSTOMERNUM-INT)
            END-EXEC.
 
       * SQLCA DB2 communications area
@@ -270,40 +245,26 @@
            INITIALIZE DB2-POLICY.
 
       *---------------------------------------------------------------*
-
-           Exec Cics Get Container(ICOM-Container)
-                         Channel(ICOM-Channel)
-                         Flength(ICOM-Data-Length)
-                         Set(ICOM-Pointer)
-                         Resp(WS-RESP)
-           End-Exec.
-           If WS-RESP = DFHRESP(NORMAL)
-             Set ICOM-Pointer-Start   To ICOM-Pointer
-             Set Address Of DFHCOMMAREA To ICOM-Pointer
-             Move CA-Request-ID    To WS-Request-ID
-             Move CA-Customer-Num  To DB2-Customernum-Int
-           Else
-      *---------------------------------------------------------------*
       * Check commarea and obtain required details                    *
       *---------------------------------------------------------------*
       * If NO commarea received issue an ABEND
-             IF EIBCALEN IS EQUAL TO ZERO
-               MOVE ' NO COMMAREA RECEIVED' TO EM-VARIABLE
-               PERFORM WRITE-ERROR-MESSAGE
-               EXEC CICS ABEND ABCODE('LGCA') NODUMP END-EXEC
-             END-IF
+           IF EIBCALEN IS EQUAL TO ZERO
+             MOVE ' NO COMMAREA RECEIVED' TO EM-VARIABLE
+             PERFORM WRITE-ERROR-MESSAGE
+             EXEC CICS ABEND ABCODE('LGCA') NODUMP END-EXEC
+           END-IF
 
       * initialize commarea return code to zero
-             MOVE '00' TO CA-RETURN-CODE
-             MOVE EIBCALEN TO WS-CALEN
-             SET WS-ADDR-DFHCOMMAREA TO ADDRESS OF DFHCOMMAREA
+           MOVE '00' TO CA-RETURN-CODE
+           MOVE EIBCALEN TO WS-CALEN
+           SET WS-ADDR-DFHCOMMAREA TO ADDRESS OF DFHCOMMAREA
 
       * Convert commarea customer & policy nums to DB2 integer format
-             MOVE CA-CUSTOMER-NUM TO DB2-CUSTOMERNUM-INT
-             MOVE CA-POLICY-NUM   TO DB2-POLICYNUM-INT
+           MOVE CA-CUSTOMER-NUM TO DB2-CUSTOMERNUM-INT
+           MOVE CA-POLICY-NUM   TO DB2-POLICYNUM-INT
       * and save in error msg field incase required
-             MOVE CA-CUSTOMER-NUM TO EM-CUSNUM
-             MOVE CA-POLICY-NUM   TO EM-POLNUM
+           MOVE CA-CUSTOMER-NUM TO EM-CUSNUM
+           MOVE CA-POLICY-NUM   TO EM-POLNUM
 
       *----------------------------------------------------------------*
       * Check which policy type is being requested                     *
@@ -311,8 +272,7 @@
       * inquires are supported, but will make future expansion simpler *
       *----------------------------------------------------------------*
       * Upper case value passed in Request Id field                    *
-             MOVE FUNCTION UPPER-CASE(CA-REQUEST-ID) TO WS-REQUEST-ID
-           End-If
+           MOVE FUNCTION UPPER-CASE(CA-REQUEST-ID) TO WS-REQUEST-ID
 
            EVALUATE WS-REQUEST-ID
 
@@ -343,15 +303,6 @@
              WHEN '05ICOM'
                INITIALIZE DB2-COMMERCIAL
                PERFORM GET-COMMERCIAL-DB2-INFO-5
-
-             WHEN '01ICLM'
-               INITIALIZE DB2-CLAIM
-               MOVE CA-C-Num        TO DB2-CLAIMNUM-INT
-               PERFORM GET-CLAIM-DB2-INFO-1
-
-             WHEN '02ICLM'
-               INITIALIZE DB2-CLAIM
-               PERFORM GET-CLAIM-DB2-INFO-2
 
              WHEN OTHER
                MOVE '99' TO CA-RETURN-CODE
@@ -718,8 +669,8 @@
                    :DB2-B-Status-Int,
                    :DB2-B-RejectReason
              FROM  POLICY,COMMERCIAL
-             WHERE ( POLICY.POLICYNUMBER =
-                        COmmercial.POLICYNUMBER   AND
+             WHERE ( POLICY.POLICYNUMBER = 
+                        COMMERCIAL.POLICYNUMBER   AND
                      POLICY.CUSTOMERNUMBER =
                         :DB2-CUSTOMERNUM-INT             AND
                      POLICY.POLICYNUMBER =
@@ -907,31 +858,9 @@
              PERFORM END-PROGRAM
            END-IF.
 
-           Set Address Of ICOM-Record To ICOM-Pointer-Start
-      *    If ICOM-Record-Count > 0
-      *      Move ICOM-Record  To DFHCOMMAREA
-      *      Move '00' To CA-RETURN-CODE
-      *    Else
-      *      Move '66' To CA-RETURN-CODE
-      *    End-If
-
-           Multiply ICOM-Record-Count By 1202 Giving ICOM-Data-Length
-           Exec CICS Put Container('ICOM-Data')
-                         Channel('ICOM')
-                         From(ICOM-Record)
-                         Flength(ICOM-Data-Length)
-           End-Exec.
-           Exec CICS Put Container('ICOM-Count')
-                         Channel('ICOM')
-                         From(ICOM-Record-Count)
-                         Flength(2)
-           End-Exec.
-
            Exit.
 
        GET-Commercial-DB2-INFO-3-Cur.
-
-           Set Address Of DFHCOMMAREA To ICOM-Pointer
 
            EXEC SQL
              Fetch Cust_Cursor
@@ -975,7 +904,6 @@
              MOVE DB2-COMMERCIAL     TO CA-COMMERCIAL(1:WS-COMM-LEN)
 
              Add 1 To ICOM-Record-Count
-             Set icom-pointer to address of CA-B-FILLER
              If ICOM-Record-Count > 20
                Move 17 To SQLCODE
              End-If
@@ -1057,141 +985,6 @@
              MOVE DB2-POLICY-COMMON        TO CA-POLICY-COMMON
              MOVE DB2-COMMERCIAL     TO CA-COMMERCIAL(1:WS-COMM-LEN)
            End-If
-
-
-           EXIT.
-
-      *================================================================*
-      * Use Select on Claim to return a
-      * single row that matches the claim number
-      *================================================================*
-       GET-Claim-DB2-INFO-1.
-
-           MOVE ' SELECT Claim ' TO EM-SQLREQ
-
-           EXEC SQL
-             SELECT
-                   POLICY.CustomerNumber,
-                   ClaimNumber,
-                   CLAIM.PolicyNumber,
-                   ClaimDate,
-                   Paid,
-                   Value,
-                   Cause,
-                   Observations
-             INTO  :DB2-Customernum-int,
-                   :DB2-Claimnum-int,
-                   :DB2-POLICYNUM-INT,
-                   :DB2-C-Date,
-                   :DB2-C-Paid-Int,
-                   :DB2-C-Value-Int,
-                   :DB2-C-Cause,
-                   :DB2-C-Observations
-             FROM  POLICY,CLAIM
-             WHERE ( POLICY.POLICYNUMBER =
-                        CLAIM.POLICYNUMBER   AND
-                     CLAIM.ClaimNumber =
-                        :DB2-ClaimNum-INT             )
-           END-EXEC
-
-           IF SQLCODE = 0
-      *      Select was successful
-
-      *      Calculate size of commarea required to return all data
-             ADD WS-CA-HEADERTRAILER-LEN TO WS-REQUIRED-CA-LEN
-             ADD WS-FULL-CLAIM-LEN       TO WS-REQUIRED-CA-LEN
-
-      *      if commarea received is not large enough ...
-      *        set error return code and return to caller
-             IF EIBCALEN IS LESS THAN WS-REQUIRED-CA-LEN
-               MOVE '98' TO CA-RETURN-CODE
-               EXEC CICS RETURN END-EXEC
-             ELSE
-               MOVE DB2-Customernum-int      TO CA-CUSTOMER-NUM
-               MOVE DB2-PolicyNum-int        TO CA-POLICY-NUM
-               MOVE DB2-Claimnum-int         TO DB2-C-Num
-               MOVE DB2-C-Paid-Int           TO DB2-C-Paid
-               MOVE DB2-C-Value-Int          TO DB2-C-Value
-      *
-               MOVE DB2-POLICY-COMMON  TO CA-POLICY-COMMON
-               MOVE DB2-Claim          TO CA-Claim(1:WS-COMM-LEN)
-             END-IF
-
-      *      Mark the end of the policy data
-             MOVE 'FINAL' TO CA-C-FILLER(1:5)
-
-           ELSE
-      *      Non-zero SQLCODE from first SQL FETCH statement
-             IF SQLCODE EQUAL 100
-      *        No rows found - invalid customer / policy number
-               MOVE '01' TO CA-RETURN-CODE
-             ELSE
-      *        something has gone wrong
-               MOVE '90' TO CA-RETURN-CODE
-      *        Write error message to TD QUEUE(CSMT)
-               PERFORM WRITE-ERROR-MESSAGE
-             END-IF
-           END-IF.
-
-
-           EXIT.
-
-      *================================================================*
-      * Use Select on Claim to return rows
-      * that matches the customer number
-      *================================================================*
-       GET-Claim-DB2-INFO-2.
-
-           MOVE ' SELECT Claim ' TO EM-SQLREQ
-
-           EXEC SQL
-             OPEN CusClaim_Cursor
-           END-EXEC.
-           IF SQLCODE NOT EQUAL 0
-             MOVE '89' TO CA-RETURN-CODE
-             PERFORM WRITE-ERROR-MESSAGE
-             PERFORM END-PROGRAM
-           END-IF.
-
-           Perform GET-Claim-DB2-INFO-2-Cur
-                     With Test after Until SQLCODE > 0
-
-           EXEC SQL
-             Close CusClaim_Cursor
-           END-EXEC.
-           IF SQLCODE NOT EQUAL 0
-             MOVE '88' TO CA-RETURN-CODE
-             PERFORM WRITE-ERROR-MESSAGE
-             PERFORM END-PROGRAM
-           END-IF.
-
-           Exit.
-
-       GET-Claim-DB2-INFO-2-Cur.
-
-           EXEC SQL
-             Fetch CusClaim_Cursor
-             INTO
-                   :DB2-Customernum-int,
-                   :DB2-Claimnum-int,
-                   :DB2-POLICYNUM-INT,
-                   :DB2-C-Date,
-                   :DB2-C-Paid-Int,
-                   :DB2-C-Value-Int,
-                   :DB2-C-Cause,
-                   :DB2-C-Observations
-           END-EXEC
-
-           IF SQLCODE = 0
-               MOVE DB2-Customernum-int  TO CA-CUSTOMER-NUM
-               MOVE DB2-PolicyNum-int    TO CA-POLICY-NUM
-               MOVE DB2-Claimnum-int     TO DB2-C-Num
-               MOVE DB2-C-Paid-Int       TO DB2-C-Paid
-               MOVE DB2-C-Value-Int      TO DB2-C-Value
-               MOVE DB2-POLICY-COMMON    TO CA-POLICY-COMMON
-               MOVE DB2-Claim            TO CA-Claim(1:WS-COMM-LEN)
-               MOVE 'FINAL'              TO CA-C-FILLER(1:5)
-           END-IF.
 
 
            EXIT.
