@@ -135,7 +135,7 @@
 
            EXEC CICS LINK Program(LGUCVS01)
                 Commarea(DFHCOMMAREA)
-                LENGTH(233)
+                LENGTH(225)
            END-EXEC.
 
       * Return to caller

@@ -173,7 +173,7 @@
 
            EXEC CICS LINK Program(LGACVS01)
                 Commarea(DFHCOMMAREA)
-                LENGTH(233)
+                LENGTH(225)
            END-EXEC.
 
            MOVE DB2-CUSTOMERNUM-INT TO D2-CUSTOMER-NUM.
