@@ -74,56 +74,49 @@
                  If (
                      ENP4CNOO Not = Spaces      AND
                      ENP4CNOO Not = Low-Values  AND
-                     ENP4CNOO Not = 0
+                     ENP4CNOO Not = 0           AND
+                     ENP4CNOO Not = 0000000000
                                                    )
                                                     AND
                     (
                      ENP4PNOO Not = Spaces      AND
                      ENP4PNOO Not = Low-Values  AND
-                     ENP4PNOO Not = 0
+                     ENP4PNOO Not = 0           AND
+                     ENP4PNOO Not = 0000000000
                                                    )
                         Move '01ICOM'   To CA-REQUEST-ID
                         Move ENP4CNOO   To CA-CUSTOMER-NUM
                         Move ENP4PNOO   To CA-POLICY-NUM
-                 End-If
-
+                 Else
                  If (
-                     ENP4CNOO     = Spaces      OR
-                     ENP4CNOO     = Low-Values  OR
-                     ENP4CNOO     = 0
-                                                   )
-                                                    AND
-                    (
                      ENP4PNOO Not = Spaces      AND
                      ENP4PNOO Not = Low-Values  AND
-                     ENP4PNOO Not = 0
+                     ENP4PNOO Not = 0           AND
+                     ENP4PNOO Not = 0000000000
                                                    )
                         Move '02ICOM'   To CA-REQUEST-ID
                         Move ENP4PNOO   To CA-POLICY-NUM
-                 End-If
-
+                 Else
                  If (
                      ENP4CNOO Not = Spaces      AND
                      ENP4CNOO Not = Low-Values  AND
-                     ENP4CNOO Not = 0
-                                                   )
-                                                    AND
-                    (
-                     ENP4PNOO     = Spaces      Or
-                     ENP4PNOO     = Low-Values  Or
-                     ENP4PNOO     = 0
+                     ENP4CNOO Not = 0           AND
+                     ENP4CNOO Not = 0000000000
                                                    )
                         Move '03ICOM'   To CA-REQUEST-ID
                         Move ENP4CNOO   To CA-CUSTOMER-NUM
-                 End-If
-
+                 Else
                  If (
                      ENP4HPCO NOT = Spaces      AND
                      ENP4HPCO NOT = Low-Values  AND
-                     ENP4HPCO NOT = 0
+                     ENP4HPCO Not = 0           AND
+                     ENP4HPCO NOT = 00000000
                                                    )
                         Move '05ICOM'   To CA-REQUEST-ID
                         Move ENP4HPCO   To CA-B-PostCode
+                 End-If
+                 End-If
+                 End-If
                  End-If
 
                  EXEC CICS LINK PROGRAM('LGIPOL01')
@@ -133,7 +126,8 @@
                  IF CA-RETURN-CODE > 0
                    GO TO NO-DATA
                  END-IF
-
+              
+                 Move CA-POLICY-NUM        To  ENP4PNOI
                  Move CA-CUSTOMER-NUM      To  ENP4CNOI
                  Move CA-ISSUE-DATE        To  ENP4IDAI
                  Move CA-EXPIRY-DATE       To  ENP4EDAI

@@ -35,31 +35,13 @@
        01  WS-TIME                     PIC X(8)  VALUE SPACES.
        01  WS-DATE                     PIC X(10) VALUE SPACES.
 
-       01  WS-POLICY-LENGTHS.
-           03 WS-CUSTOMER-LEN          PIC S9(4) COMP VALUE +72.
-           03 WS-POLICY-LEN            PIC S9(4) COMP VALUE +72.
-           03 WS-ENDOW-LEN             PIC S9(4) COMP VALUE +52.
-           03 WS-HOUSE-LEN             PIC S9(4) COMP VALUE +58.
-           03 WS-MOTOR-LEN             PIC S9(4) COMP VALUE +65.
-           03 WS-FULL-ENDOW-LEN        PIC S9(4) COMP VALUE +124.
-           03 WS-FULL-HOUSE-LEN        PIC S9(4) COMP VALUE +130.
-           03 WS-FULL-MOTOR-LEN        PIC S9(4) COMP VALUE +137.
-           03 WS-SUMRY-ENDOW-LEN       PIC S9(4) COMP VALUE +25.
-
       * Error Message structure
        01  ERROR-MSG.
            03 EM-DATE                  PIC X(8)  VALUE SPACES.
            03 FILLER                   PIC X     VALUE SPACES.
            03 EM-TIME                  PIC X(6)  VALUE SPACES.
            03 FILLER                   PIC X(9)  VALUE ' LGUCUS01'.
-           03 EM-VARIABLE.
-             05 FILLER                 PIC X(6)  VALUE ' CNUM='.
-             05 EM-CUSNUM              PIC X(10)  VALUE SPACES.
-             05 FILLER                 PIC X(6)  VALUE ' PNUM='.
-             05 EM-POLNUM              PIC X(10)  VALUE SPACES.
-             05 EM-SQLREQ              PIC X(16) VALUE SPACES.
-             05 FILLER                 PIC X(9)  VALUE ' SQLCODE='.
-             05 EM-SQLRC               PIC +9(5) USAGE DISPLAY.
+           03 EM-VARIABLE              PIC X(21) VALUE SPACES.
 
        01  CA-ERROR-MSG.
            03 FILLER                   PIC X(9)  VALUE 'COMMAREA='.
@@ -124,9 +106,6 @@
            MOVE '00' TO CA-NUM-POLICIES
            MOVE EIBCALEN TO WS-CALEN.
            SET WS-ADDR-DFHCOMMAREA TO ADDRESS OF DFHCOMMAREA.
-
-      * and save in error msg field incase required
-           MOVE CA-CUSTOMER-NUM TO EM-CUSNUM
 
            If CA-REQUEST-ID NOT = '01UCUS'
                MOVE '99' TO CA-RETURN-CODE

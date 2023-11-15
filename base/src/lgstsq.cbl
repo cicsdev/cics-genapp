@@ -16,9 +16,7 @@
 
        01  WS-FLAG                   PIC X.
        01  WS-RESP                   PIC S9(8) COMP.
-       01  WS-STARTCODE              PIC XX Value spaces.
        01  WS-INVOKEPROG             PIC X(8) Value spaces.
-       01  WS-PRINSYSID              PIC XXXX Value spaces.
        01  WS-RECV.
          03 WS-RECV-TRANID           PIC X(5).
          03 WS-RECV-DATA             PIC X(74).
@@ -40,8 +38,6 @@
 
        01 TEMPO                      PIC X(90) VALUE SPACES.
        77 STDQ-NAME                  PIC X(4)  VALUE 'CSMT'.
-       77 MSGEND                     PIC X(24) VALUE
-                                        'Transaction ended      '.
 
       *****************************************************************
       *    L I N K A G E     S E C T I O N
@@ -65,17 +61,10 @@
                 RESP(WS-RESP)
            END-EXEC.
 
-           EXEC CICS ASSIGN STARTCODE(WS-STARTCODE)
-                RESP(WS-RESP)
-           END-EXEC.
-
-           EXEC CICS ASSIGN PRINSYSID(WS-PRINSYSID)
-                RESP(WS-RESP)
-           END-EXEC.
-
            EXEC CICS ASSIGN INVOKINGPROG(WS-INVOKEPROG)
                 RESP(WS-RESP)
            END-EXEC.
+           
            IF WS-INVOKEPROG NOT = SPACES
               MOVE 'C' To WS-FLAG
               MOVE COMMA-DATA  TO WRITE-MSG-MSG
@@ -135,4 +124,3 @@
        A-EXIT.
            EXIT.
            GOBACK.
-

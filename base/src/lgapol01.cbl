@@ -37,34 +37,18 @@
        01  TIME1                       PIC X(8)  VALUE SPACES.
        01  DATE1                       PIC X(10) VALUE SPACES.
 
-      *----------------------------------------------------------------*
-      * Definitions required to check for Business Rule processing
-      *----------------------------------------------------------------*
-       01  BUSINESS-RULES              PIC X VALUE 'N'.
-            88  IN-STANDARD-MODE       VALUE 'N'.
-            88  IN-RULES-MODE          VALUE 'Y'.
-
       * Error Message structure
        01  ERROR-MSG.
            03 EM-DATE                  PIC X(8)  VALUE SPACES.
            03 FILLER                   PIC X     VALUE SPACES.
            03 EM-TIME                  PIC X(6)  VALUE SPACES.
            03 FILLER                   PIC X(9)  VALUE ' LGAPOL01'.
-           03 EM-VARIABLE.
-             05 FILLER                 PIC X(6)  VALUE ' CNUM='.
-             05 EM-CUSNUM              PIC X(10)  VALUE SPACES.
-             05 FILLER                 PIC X(6)  VALUE ' PNUM='.
-             05 EM-POLNUM              PIC X(10)  VALUE SPACES.
-             05 EM-SQLREQ              PIC X(16) VALUE SPACES.
-             05 FILLER                 PIC X(9)  VALUE ' SQLCODE='.
-             05 EM-SQLRC               PIC +9(5) USAGE DISPLAY.
+           03 EM-VARIABLE              PIC X(21) VALUE SPACES.
 
        01  CA-ERROR-MSG.
            03 FILLER                   PIC X(9)  VALUE 'COMMAREA='.
            03 CA-DATA                  PIC X(90) VALUE SPACES.
        01  LGAPDB01                    PIC X(8)  VALUE 'LGAPDB01'.
-       01  LGAPBR01                    PIC X(8)  VALUE 'LGAPBR01'.
-       01  LGAPVS01                    PIC X(8)  VALUE 'LGAPVS01'.
       *----------------------------------------------------------------*
 
       *----------------------------------------------------------------*
@@ -75,11 +59,6 @@
            03 WS-CA-HEADER-LEN         PIC S9(4) COMP VALUE +28.
            03 WS-REQUIRED-CA-LEN       PIC S9(4)      VALUE +0.
 
-      * Define a varying length character string to contain actual
-      * amount of data that will be inserted to Varchar field
-       01 WS-VARY-FIELD.
-          49 WS-VARY-LEN               PIC S9(4) COMP.
-          49 WS-VARY-CHAR              PIC X(3900).
       *----------------------------------------------------------------*
 
 
@@ -126,9 +105,6 @@
            MOVE '00' TO CA-RETURN-CODE
            SET WS-ADDR-DFHCOMMAREA TO ADDRESS OF DFHCOMMAREA.
 
-      * and save in error msg field incase required
-           MOVE CA-CUSTOMER-NUM TO EM-CUSNUM
-
       * Check commarea length
            ADD WS-CA-HEADER-LEN TO WS-REQUIRED-CA-LEN
 
@@ -140,33 +116,12 @@
            END-IF
 
       *----------------------------------------------------------------*
-      *    Perform Business Rule processing via ODM                    *
-      *----------------------------------------------------------------*
-      *    If an Endowment policy is being added, and if Business
-      *    Rule processing is required, then call the Business Rule
-      *    program.
-      *    Note: uncomment the following 'MOVE' statement to apply
-      *          Business Rule processing (default=no)
-      *    MOVE 'Y' TO BUSINESS-RULES
-
-           If IN-RULES-MODE And CA-REQUEST-ID = '01AEND'
-               EXEC CICS Link Program(LGAPBR01)
-                    Commarea(DFHCOMMAREA)
-                    LENGTH(32500)
-               END-EXEC
-           End-if
-
-      *----------------------------------------------------------------*
       *    Perform the data Inserts                                    *
       *----------------------------------------------------------------*
            EXEC CICS Link Program(LGAPDB01)
                 Commarea(DFHCOMMAREA)
                 LENGTH(32500)
            END-EXEC.
-
-           If CA-RETURN-CODE > 0
-             EXEC CICS RETURN END-EXEC
-           End-if
 
            EXEC CICS RETURN END-EXEC.
 

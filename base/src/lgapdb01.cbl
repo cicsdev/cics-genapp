@@ -174,7 +174,7 @@
 
       * Convert commarea customer & policy nums to DB2 integer format
            MOVE CA-CUSTOMER-NUM TO DB2-CUSTOMERNUM-INT
-           MOVE CA-POLICY-NUM   TO DB2-C-PolicyNum-INT
+           MOVE ZERO            TO DB2-C-PolicyNum-INT
       * and save in error msg field incase required
            MOVE CA-CUSTOMER-NUM TO EM-CUSNUM
 
@@ -196,12 +196,8 @@
                MOVE 'M' TO DB2-POLICYTYPE
 
              WHEN '01ACOM'
-      *        ADD WS-FULL-MOTOR-LEN TO WS-REQUIRED-CA-LEN
+               ADD WS-FULL-COMM-LEN TO WS-REQUIRED-CA-LEN
                MOVE 'C' TO DB2-POLICYTYPE
-
-             WHEN '01ACLM'
-      *        ADD WS-FULL-MOTOR-LEN TO WS-REQUIRED-CA-LEN
-               MOVE 'X' TO DB2-POLICYTYPE
 
              WHEN OTHER
       *        Request is not recognised or supported
@@ -220,9 +216,7 @@
       *    Perform the INSERTs against appropriate tables              *
       *----------------------------------------------------------------*
       *    Call procedure to Insert row in policy table
-           If CA-REQUEST-ID Not = '01ACLM'
-             PERFORM INSERT-POLICY
-           End-If
+           PERFORM INSERT-POLICY
 
       *    Call appropriate routine to insert row to specific
       *    policy type table.
@@ -239,9 +233,6 @@
 
              WHEN '01ACOM'
                PERFORM INSERT-COMMERCIAL
-
-             WHEN '01ACLM'
-               PERFORM INSERT-CLAIM
 
              WHEN OTHER
       *        Request is not recognised or supported
@@ -552,49 +543,6 @@
                          :CA-B-RejectReason
                                              )
            END-EXEC
-
-           IF SQLCODE NOT EQUAL 0
-             MOVE '90' TO CA-RETURN-CODE
-             PERFORM WRITE-ERROR-MESSAGE
-      *      Issue Abend to cause backout of update to Policy table
-             EXEC CICS ABEND ABCODE('LGSQ') NODUMP END-EXEC
-             EXEC CICS RETURN END-EXEC
-           END-IF.
-
-           EXIT.
-
-      *================================================================*
-      * Issue INSERT on claim table with values passed in commarea     *
-      *================================================================*
-       INSERT-CLAIM.
-
-           MOVE CA-C-Paid            To DB2-C-Paid-INT
-           MOVE CA-C-Value           To DB2-C-Value-INT
-
-           MOVE ' INSERT CLAIM' TO EM-SQLREQ
-           EXEC SQL
-             INSERT INTO CLAIM
-                       (
-                         ClaimNumber,
-                         PolicyNumber,
-                         ClaimDate,
-                         Paid,
-                         Value,
-                         Cause,
-                         Observations
-                                             )
-                VALUES (
-                         :DB2-C-Num-Int,
-                         :DB2-C-Policynum-Int,
-                         :CA-C-Date,
-                         :DB2-C-Paid-Int,
-                         :DB2-C-Value-Int,
-                         :CA-C-Cause,
-                         :CA-C-Observations
-                                             )
-           END-EXEC
-
-           Move DB2-C-Num-Int    To CA-C-Num
 
            IF SQLCODE NOT EQUAL 0
              MOVE '90' TO CA-RETURN-CODE

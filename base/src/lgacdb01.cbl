@@ -51,8 +51,6 @@
            03 EM-VARIABLE.
              05 FILLER                 PIC X(6)  VALUE ' CNUM='.
              05 EM-CUSNUM              PIC X(10)  VALUE SPACES.
-             05 FILLER                 PIC X(6)  VALUE ' PNUM='.
-             05 EM-POLNUM              PIC X(10)  VALUE SPACES.
              05 EM-SQLREQ              PIC X(16) VALUE SPACES.
              05 FILLER                 PIC X(9)  VALUE ' SQLCODE='.
              05 EM-SQLRC               PIC +9(5) USAGE DISPLAY.
@@ -189,10 +187,6 @@
                 Commarea(CDB2AREA)
                 LENGTH(32500)
            END-EXEC.
-
-           IF CA-RETURN-CODE NOT EQUAL 0
-             EXEC CICS RETURN END-EXEC
-           END-IF
 
       *    Return to caller
            EXEC CICS RETURN END-EXEC.

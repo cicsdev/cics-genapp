@@ -131,7 +131,6 @@
                Move Spaces To WF-Policy-Data
            End-Evaluate
 
-           Move CA-Policy-Num      To WF-Policy-Num
       *---------------------------------------------------------------*
            Exec CICS Write File('KSDSPOLY')
                      From(WF-Policy-Info)
@@ -164,6 +163,7 @@
            MOVE WS-DATE TO EM-DATE
            MOVE WS-TIME TO EM-TIME
            Move CA-Customer-Num To EM-Cusnum
+           Move CA-Policy-Num   To EM-POLNUM 
            Move WS-RESP         To EM-RespRC
            Move WS-RESP2        To EM-Resp2RC
            EXEC CICS LINK PROGRAM('LGSTSQ')
