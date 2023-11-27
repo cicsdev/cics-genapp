@@ -1,7 +1,7 @@
 # General insurance application (GenApp) for IBM CICS TS
 
 This GitHub repository contains the code originally distributed by the
-[IBM SupportPac CB12](https://www.ibm.com/support/pages/cb12-general-insurance-application-genapp-ibm-cics-ts).
+IBM SupportPac CB12 (now removed).
 The repository demonstrates application modernization for IBM CICS Transaction Server for
 z/OS (CICS TS), by modeling a general insurance application.
 
