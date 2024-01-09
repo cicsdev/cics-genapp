@@ -49,8 +49,3 @@ the project.
 
 This sample is supplied under the [Eclipse Public License 2.0](LICENSE).
 
-## See also
-
-[IBM SupportPac CA0D](https://www.ibm.com/support/pages/ca0d-ibm-genapp-mobile-application-sample-cics-ts) can be used
-to demonstrate how to expose a legacy CICS Transaction Server for z/OS application to a mobile front-end by using IBM
-Worklight as the mobile framework. The SupportPac is based on the GenApp sample application.
