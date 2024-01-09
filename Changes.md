@@ -3,8 +3,8 @@
 
 ### November 15, 2023
 
-* Fixed bugs and incorrect behaviour around COMMAREA sizes and interfaces.
-* Removed unnecessary/dead code and declarations in many of the programs.
+* Fixed incorrect behaviour around COMMAREA sizes and interfaces.
+* Removed unnecessary code and declarations
 
 
 ### May 15, 2021
