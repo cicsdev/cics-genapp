@@ -1,5 +1,12 @@
 ## Change history
 
+
+### November 15, 2023
+
+* Fixed bugs and incorrect behaviour around COMMAREA sizes and interfaces.
+* Removed unnecessary/dead code and declarations in many of the programs.
+
+
 ### May 15, 2021
 
 * Initial create of base GenApp component in GitHub.
