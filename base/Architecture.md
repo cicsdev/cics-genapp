@@ -121,3 +121,8 @@ to Db2, and FILE resources. For a complete list of the CICS resources that are s
 ## What to do next
 
 The next step is to [install the application](Installation.md).
+
+## Program Architecture
+
+The Application relationship between programs and the VSAM and DB2 can be described by the following diagram.
+![GenApp Program Architecture](images/GenApp-Static-Analysis-Diagram.jpg)
