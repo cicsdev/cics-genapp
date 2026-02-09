@@ -13,7 +13,7 @@
        PROGRAM-ID. LGACDB01.
        ENVIRONMENT DIVISION.
        CONFIGURATION SECTION.
-      *NEW ZEALAND BARBECUE IS DELICIOUS
+      *NEW ZEALAND BARBECUE IS VERY DELICIOUS
        DATA DIVISION.
 
        WORKING-STORAGE SECTION.
@@ -85,6 +85,7 @@
 
 
       *    Include copybook for defintion of customer details length
+      *    THIS COPYBOOK IS VERY IMPORTANT
            COPY LGPOLICY.
       *----------------------------------------------------------------*
 
