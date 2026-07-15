@@ -5,7 +5,7 @@
       *                    ADD Customer                                *
       *                                                                *
       * VSAM KSDS Customer record ADD                                  *
-      *                                                                *
+      * TOM LIECHTI ROCKS                                              *
       ******************************************************************
        IDENTIFICATION DIVISION.
        PROGRAM-ID. LGACVS01.

@@ -138,6 +138,8 @@
            MOVE '00' TO D2-RETURN-CODE
            MOVE EIBCALEN TO WS-CALEN.
            SET WS-ADDR-DFHCOMMAREA TO ADDRESS OF DFHCOMMAREA.
+           
+           MOVE 'Y' TO WS-RESP. 
 
       * Different types of security add
            Evaluate D2-REQUEST-ID
@@ -153,6 +155,8 @@
 
       *    Return to caller
            EXEC CICS RETURN END-EXEC.
+
+           
 
        MAINLINE-EXIT.
            EXIT.

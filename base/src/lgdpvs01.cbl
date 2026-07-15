@@ -4,7 +4,7 @@
       *                                                                *
       *                    DELETE Policy                               *
       *                                                                *
-      * VSAM KSDS Policy record DELETE                                 *
+      * VSAM KSDS Policy record DELETE 2                               *
       *                                                                *
       ******************************************************************
        IDENTIFICATION DIVISION.
@@ -106,8 +106,8 @@
       *
            MOVE WS-DATE TO EM-DATE
            MOVE WS-TIME TO EM-TIME
-           Move CA-Customer-Num To EM-CUSNUM 
-           Move CA-POLICY-NUM To EM-POLNUM 
+           Move CA-Customer-Num To EM-CUSNUM
+           Move CA-POLICY-NUM To EM-POLNUM
            Move WS-RESP         To EM-RespRC
            Move WS-RESP2        To EM-Resp2RC
            EXEC CICS LINK PROGRAM('LGSTSQ')

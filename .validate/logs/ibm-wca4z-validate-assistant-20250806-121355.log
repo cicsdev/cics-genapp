@@ -1,0 +1,26 @@
+2025-08-06 14:13:55 - [INFO] - Z Validation Assistant Version: 2.3.0
+2025-08-06 14:13:55 - [INFO] - Z Validation Assistant tree view registered
+2025-08-06 14:13:55 - [INFO] - Z Validation Assistant Extension terminal created
+2025-08-06 14:13:55 - [INFO] - DEMO_MODE=false
+2025-08-06 14:13:55 - [INFO] - DEMO_VALIDATION=false
+2025-08-06 14:13:55 - [INFO] - DEMO_VALIDATION_VERSION=*not set*
+2025-08-06 14:13:55 - [INFO] - DEMO_VALIDATION_DIR=*not set*
+2025-08-06 14:13:55 - [INFO] - DEMO_VALIDATION_REST=false
+2025-08-06 14:13:55 - [INFO] - DEMO_VALIDATION_HOST=false
+2025-08-06 14:13:56 - [INFO] - DEMO_VALIDATION_HOST=false
+2025-08-06 14:13:56 - [INFO] - DEMO_VALIDATION_HOST=false
+2025-08-06 14:13:56 - [INFO] - DEMO_VALIDATION_JAVA=false
+2025-08-06 14:13:56 - [INFO] - DEMO_VALIDATION_JUNIT=false
+2025-08-06 14:13:56 - [INFO] - DEMO_VALIDATION_PROGRAMNAME=default RAEXPORT
+2025-08-06 14:13:56 - [INFO] - DEMO_VALIDATION_DEMONAME=default demo
+2025-08-06 14:13:56 - [INFO] - DEMO_VALIDATION_TDG=false
+2025-08-06 14:13:56 - [INFO] - DEMO_VALIDATION_TDG_DO=false
+2025-08-06 14:13:56 - [INFO] - VALIDATION_COMPDEFREMOVAL=true
+2025-08-06 14:13:56 - [INFO] - VALIDATION_COMPDEFREMOVAL_TRIMLINECOLS=true
+2025-08-06 14:13:56 - [INFO] - Z Validation Assistant isDemoMode()=false
+2025-08-06 14:13:56 - [INFO] - Z Validation Assistant isDebugMode()=false
+2025-08-06 14:13:56 - [INFO] - Z Validation Assistant ignoreSystemDemoMode()=false
+2025-08-06 14:13:56 - [INFO] - Z Validation Assistant demoHost()=false
+2025-08-06 14:13:56 - [INFO] - Z Validation Assistant demoProgramInfo()=false
+2025-08-06 14:13:56 - [INFO] - Z Validation Assistant demoClassMethodInfo()=false
+2025-08-06 14:13:56 - [INFO] - Z Validation Assistant getDemoVersion()=2

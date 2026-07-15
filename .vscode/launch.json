@@ -1,0 +1,39 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        
+        {
+            "type": "zOpenDebug",
+            "request": "launch",
+            "name": "Z Open Debug: Connect to a parked debug session",
+            "connection": {
+                "type": "zowe",
+                "name": ""
+            }
+        },
+        {
+            "type": "zOpenDebug",
+            "request": "launch",
+            "name": "Z Open Debug: Connect to a parked debug session",
+            "connection": {
+                "type": "zowe",
+                "name": ""
+            },
+            "applicationLaunch": {
+                "commandLine": ""
+            }
+        },
+        {
+            "type": "zOpenDebug",
+            "request": "attach",
+            "name": "Z Open Debug: List parked debug sessions",
+            "connection": {
+                "type": "zowe",
+                "name": ""
+            }
+        }
+    ]
+}

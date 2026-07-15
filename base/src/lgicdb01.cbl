@@ -3,7 +3,7 @@
       *                                                                *
       * (C) Copyright IBM Corp. 2011, 2021                             *
       *                                                                *
-      *                    Inquire Customer                            *
+      *                    Inquire Customer    3                       *
       *                                                                *
       * Select customer details from DB2 table                         *
       *                                                                *
@@ -12,7 +12,7 @@
        PROGRAM-ID. LGICDB01.
        ENVIRONMENT DIVISION.
        CONFIGURATION SECTION.
-      *
+      *SINGAPORE AND INDIA ARE COOL
        DATA DIVISION.
 
        WORKING-STORAGE SECTION.
@@ -52,7 +52,7 @@
        01 CA-ERROR-MSG.
            03 FILLER                PIC X(9)  VALUE 'COMMAREA='.
            03 CA-DATA               PIC X(90) VALUE SPACES.
-       
+
       *----------------------------------------------------------------*
       * Fields to be used to calculate if commarea is large enough
        01  WS-COMMAREA-LENGTHS.
@@ -162,6 +162,7 @@
 
        MAINLINE-EXIT.
            EXIT.
+
       *----------------------------------------------------------------*
 
        GET-CUSTOMER-INFO.

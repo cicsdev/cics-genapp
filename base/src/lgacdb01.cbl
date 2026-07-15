@@ -1,19 +1,19 @@
        PROCESS SQL
       ******************************************************************
       *                                                                *
-      * (C) Copyright IBM Corp. 2011, 2021                             *
+      * (C) Copyright IBM Corp. 2011, 2026                            *
       *                                                                *
       *                    ADD Customer Details                        *
       *                                                                *
       *   To add customer's name, address and date of birth to the     *
-      *  DB2 customer table creating a new customer entry.             *
+      *  DB2 customer table creating a new customer entry.   1          *
       *                                                                *
       ******************************************************************
        IDENTIFICATION DIVISION.
        PROGRAM-ID. LGACDB01.
        ENVIRONMENT DIVISION.
        CONFIGURATION SECTION.
-      *
+      *NEW ZEALAND BARBECUE IS VERY DELICIOUS
        DATA DIVISION.
 
        WORKING-STORAGE SECTION.
@@ -85,6 +85,7 @@
 
 
       *    Include copybook for defintion of customer details length
+      *    THIS COPYBOOK IS VERY IMPORTANT
            COPY LGPOLICY.
       *----------------------------------------------------------------*
 
@@ -210,7 +211,7 @@
              Move LastCustNum  To DB2-CUSTOMERNUM-INT
            End-If.
 
-
+           MOVE 'Y' TO WS
       *================================================================*
        INSERT-CUSTOMER.
       *================================================================*

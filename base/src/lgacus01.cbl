@@ -11,7 +11,7 @@
        PROGRAM-ID. LGACUS01.
        ENVIRONMENT DIVISION.
        CONFIGURATION SECTION.
-      *
+      *Tim is really cool
        DATA DIVISION.
 
        WORKING-STORAGE SECTION.
@@ -117,7 +117,7 @@
       *----------------------------------------------------------------*
       * Call routine to Insert row in DB2 Customer table               *
            PERFORM INSERT-CUSTOMER.
-      
+
       *----------------------------------------------------------------*
       *
            EXEC CICS RETURN END-EXEC.
