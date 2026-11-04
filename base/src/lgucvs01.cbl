@@ -24,7 +24,7 @@
        01  WS-Customer-Area          PIC X(1024) value Spaces.
       ******************************
       * Variables for time/date processing
-       01  WS-ABSTIME                  PIC S9(8) COMP VALUE +0.
+       01  WS-ABSTIME                  PIC S9(15) COMP-3 VALUE +0.
        01  WS-TIME                     PIC X(8)  VALUE SPACES.
        01  WS-DATE                     PIC X(10) VALUE SPACES.
       * Error Message structure
