@@ -133,6 +133,11 @@
       *    Call procedure to update required tables
            PERFORM UPDATE-CUSTOMER-INFO.
 
+      *    Only update the VSAM file if the Db2 update succeeded
+           IF CA-RETURN-CODE NOT EQUAL '00'
+             EXEC CICS RETURN END-EXEC
+           END-IF.
+
            EXEC CICS LINK Program(LGUCVS01)
                 Commarea(DFHCOMMAREA)
                 LENGTH(225)
