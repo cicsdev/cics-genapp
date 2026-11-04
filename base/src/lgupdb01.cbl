@@ -131,7 +131,8 @@
                       EXPIRYDATE,
                       LASTCHANGED,
                       BROKERID,
-                      BROKERSREFERENCE
+                      BROKERSREFERENCE,
+                      PAYMENT
                FROM POLICY
                WHERE ( CUSTOMERNUMBER = :DB2-CUSTOMERNUM-INT AND
                        POLICYNUMBER = :DB2-POLICYNUM-INT )
