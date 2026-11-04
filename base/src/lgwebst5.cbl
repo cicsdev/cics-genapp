@@ -8,7 +8,7 @@
       *                                                                *
       ******************************************************************
        IDENTIFICATION DIVISION.
-       PROGRAM-ID. LGWEBST5
+       PROGRAM-ID. LGWEBST5.
        ENVIRONMENT DIVISION.
        CONFIGURATION SECTION.
       *
