@@ -88,6 +88,12 @@
            END-IF.
 
            ADD 5 TO WS-RECV-LEN.
+      * Never write more than WRITE-MSG holds: a 99-byte CA-ERROR-MSG
+      * (EIBCALEN 99 + 5) would otherwise copy 9 bytes of the storage
+      * that follows WRITE-MSG into the TD and TS queue records.
+           IF WS-RECV-LEN > LENGTH OF WRITE-MSG
+              MOVE LENGTH OF WRITE-MSG TO WS-RECV-LEN
+           END-IF.
 
       * Write output message to TDQ CSMT
       *
