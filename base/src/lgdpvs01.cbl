@@ -83,7 +83,9 @@
                      KeyLength(21)
                      RESP(WS-RESP)
            End-Exec.
-           If WS-RESP Not = DFHRESP(NORMAL)
+      *    A record that is already gone is not an error (see LGDPDB01)
+           If WS-RESP Not = DFHRESP(NORMAL) AND
+              WS-RESP Not = DFHRESP(NOTFND)
              Move EIBRESP2 To WS-RESP2
              MOVE '81' TO CA-RETURN-CODE
              PERFORM WRITE-ERROR-MESSAGE

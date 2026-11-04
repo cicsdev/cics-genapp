@@ -195,7 +195,7 @@
 
       *    Treat SQLCODE 0 and SQLCODE 100 (record not found) as
       *    successful - end result is record does not exist
-           IF SQLCODE NOT EQUAL 0 Then
+           IF SQLCODE NOT EQUAL 0 AND SQLCODE NOT EQUAL 100 Then
                MOVE '90' TO CA-RETURN-CODE
                PERFORM WRITE-ERROR-MESSAGE
                EXEC CICS RETURN END-EXEC
