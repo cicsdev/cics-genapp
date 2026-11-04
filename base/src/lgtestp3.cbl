@@ -267,10 +267,10 @@
        NO-ADD.
            Evaluate CA-RETURN-CODE
              When 70
-               Move 'Customer does not exist'          To  ERP1FLDO
+               Move 'Customer does not exist'          To  ERP3FLDO
                Go To ERROR-OUT
              When Other
-               Move 'Error Adding House Policy'        To  ERP1FLDO
+               Move 'Error Adding House Policy'        To  ERP3FLDO
                Go To ERROR-OUT
            End-Evaluate.
 
