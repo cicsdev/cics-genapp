@@ -30,7 +30,7 @@ The application has several transactions that you can run to access customer inf
    If the VSAM file update fails, the Db2 update is rolled back.
 
 1. Run the SSP1 transaction to access the motor policy menu. To check that you can access policy information:
-   1. In the **Policy Number** field, enter `00000000001`. In the **Cust Number** field, enter `0000000002`.
+   1. In the **Policy Number** field, enter `0000000001`. In the **Cust Number** field, enter `0000000002`.
    1. In the **Select Option** field, enter 1 to return the motor policy information from the database.
 
 ## Results
