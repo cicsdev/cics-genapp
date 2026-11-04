@@ -268,10 +268,10 @@
        NO-ADD.
            Evaluate CA-RETURN-CODE
              When 70
-               Move 'Customer does not exist'          To  ERP1FLDO
+               Move 'Customer does not exist'          To  ERP2FLDO
                Go To ERROR-OUT
              When Other
-               Move 'Error Adding Life Policy'        To  ERP1FLDO
+               Move 'Error Adding Life Policy'        To  ERP2FLDO
                Go To ERROR-OUT
            End-Evaluate.
 

@@ -8,7 +8,7 @@
       *                                                                *
       ******************************************************************
        IDENTIFICATION DIVISION.
-       PROGRAM-ID. LGWEBST5
+       PROGRAM-ID. LGWEBST5.
        ENVIRONMENT DIVISION.
        CONFIGURATION SECTION.
       *
@@ -32,7 +32,7 @@
        01  MMval                      PIC 9(6).
        01  SSval                      PIC 9(6).
        01  WS-RESP                    PIC S9(8) COMP.
-       01  WS-ABSTIME                 PIC S9(8) COMP VALUE +0.
+       01  WS-ABSTIME                 PIC S9(15) COMP-3 VALUE +0.
        01  WS-CODE                    Pic 9(4) Comp.
        01  WS-TIME                    Pic X(8).
        01  WS-Startup                 Pic X(40) Value

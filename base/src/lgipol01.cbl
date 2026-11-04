@@ -33,7 +33,7 @@
            03 WS-CALEN                 PIC S9(4) COMP.
 
       * Variables for time/date processing
-       01  ABS-TIME                    PIC S9(8) COMP VALUE +0.
+       01  ABS-TIME                    PIC S9(15) COMP-3 VALUE +0.
        01  TIME1                       PIC X(8)  VALUE SPACES.
        01  DATE1                       PIC X(10) VALUE SPACES.
 

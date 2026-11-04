@@ -48,7 +48,7 @@
           03 DB2-M-ACCIDENTS-INT       PIC S9(9) COMP.
 
       * Variables for time/date processing
-       01  WS-ABSTIME                  PIC S9(8) COMP VALUE +0.
+       01  WS-ABSTIME                  PIC S9(15) COMP-3 VALUE +0.
        01  WS-TIME                     PIC X(8)  VALUE SPACES.
        01  WS-DATE                     PIC X(10) VALUE SPACES.
 
@@ -132,6 +132,11 @@
 
       *    Call procedure to update required tables
            PERFORM UPDATE-CUSTOMER-INFO.
+
+      *    Only update the VSAM file if the Db2 update succeeded
+           IF CA-RETURN-CODE NOT EQUAL '00'
+             EXEC CICS RETURN END-EXEC
+           END-IF.
 
            EXEC CICS LINK Program(LGUCVS01)
                 Commarea(DFHCOMMAREA)

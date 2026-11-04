@@ -32,7 +32,7 @@
            03 WS-CALEN                 PIC S9(4) COMP.
 
       * Variables for time/date processing
-       01  WS-ABSTIME                  PIC S9(8) COMP VALUE +0.
+       01  WS-ABSTIME                  PIC S9(15) COMP-3 VALUE +0.
        01  WS-TIME                     PIC X(8)  VALUE SPACES.
        01  WS-DATE                     PIC X(10) VALUE SPACES.
 
@@ -41,7 +41,7 @@
            03 EM-DATE                  PIC X(8)  VALUE SPACES.
            03 FILLER                   PIC X     VALUE SPACES.
            03 EM-TIME                  PIC X(6)  VALUE SPACES.
-           03 FILLER                   PIC X(9)  VALUE ' LGICUS01'.
+           03 FILLER                   PIC X(9)  VALUE ' LGICDB01'.
            03 EM-VARIABLE.
              05 FILLER                 PIC X(6)  VALUE ' CNUM='.
              05 EM-CUSNUM              PIC X(10)  VALUE SPACES.

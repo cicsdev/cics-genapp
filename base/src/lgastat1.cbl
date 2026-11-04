@@ -13,7 +13,7 @@
        WORKING-STORAGE SECTION.
 
       * Run time (debug) infomation for this invocation
-        01  WS-ABSTIME                 PIC S9(8) COMP VALUE +0.
+        01  WS-ABSTIME                 PIC S9(15) COMP-3 VALUE +0.
         01  WS-TIME                    Pic X(8).
         01  WS-DATE                    Pic X(10).
         01  WS-QAREA.

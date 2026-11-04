@@ -31,7 +31,7 @@
            03 WS-RETRY                 PIC X.
 
       * Variables for time/date processing
-       01  WS-ABSTIME                  PIC S9(8) COMP VALUE +0.
+       01  WS-ABSTIME                  PIC S9(15) COMP-3 VALUE +0.
        01  WS-TIME                     PIC X(8)  VALUE SPACES.
        01  WS-DATE                     PIC X(10) VALUE SPACES.
 
@@ -131,7 +131,8 @@
                       EXPIRYDATE,
                       LASTCHANGED,
                       BROKERID,
-                      BROKERSREFERENCE
+                      BROKERSREFERENCE,
+                      PAYMENT
                FROM POLICY
                WHERE ( CUSTOMERNUMBER = :DB2-CUSTOMERNUM-INT AND
                        POLICYNUMBER = :DB2-POLICYNUM-INT )
@@ -205,6 +206,11 @@
 
       *    Call procedure to update required tables
            PERFORM UPDATE-POLICY-DB2-INFO.
+
+      *    Only update the VSAM file if the Db2 update succeeded
+           IF CA-RETURN-CODE NOT EQUAL '00'
+             EXEC CICS RETURN END-EXEC
+           END-IF.
 
            EXEC CICS LINK Program(LGUPVS01)
                 Commarea(DFHCOMMAREA)
@@ -368,7 +374,7 @@
 
            Evaluate SQLCODE
              When 0
-               MOVE '00' TO CA-RETURN-CODE
+               CONTINUE
              When -501
                MOVE '00' TO CA-RETURN-CODE
                MOVE '-501 detected c' TO EM-SQLREQ

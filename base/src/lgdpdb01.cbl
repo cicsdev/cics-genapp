@@ -33,7 +33,7 @@
            03 WS-CALEN                 PIC S9(4) COMP.
 
       * Variables for time/date processing
-       01  WS-ABSTIME                  PIC S9(8) COMP VALUE +0.
+       01  WS-ABSTIME                  PIC S9(15) COMP-3 VALUE +0.
        01  WS-TIME                     PIC X(8)  VALUE SPACES.
        01  WS-DATE                     PIC X(10) VALUE SPACES.
 
@@ -195,7 +195,7 @@
 
       *    Treat SQLCODE 0 and SQLCODE 100 (record not found) as
       *    successful - end result is record does not exist
-           IF SQLCODE NOT EQUAL 0 Then
+           IF SQLCODE NOT EQUAL 0 AND SQLCODE NOT EQUAL 100 Then
                MOVE '90' TO CA-RETURN-CODE
                PERFORM WRITE-ERROR-MESSAGE
                EXEC CICS RETURN END-EXEC
