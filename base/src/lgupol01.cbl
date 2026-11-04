@@ -138,6 +138,7 @@
 
              WHEN OTHER
                MOVE '99' TO CA-RETURN-CODE
+               EXEC CICS RETURN END-EXEC
            END-EVALUATE
 
            PERFORM UPDATE-POLICY-DB2-INFO.
